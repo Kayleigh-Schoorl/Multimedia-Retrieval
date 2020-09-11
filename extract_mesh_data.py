@@ -23,7 +23,7 @@ for mesh_class in os.listdir(db_path):
     mesh_class_path = os.path.join(db_path, mesh_class)
     for filename in os.listdir(mesh_class_path):
         extension = os.path.splitext(filename)[1]
-        if extension == ".off":
+        if extension == ".off" or extension == ".ply":
             mesh_path = os.path.join(mesh_class_path, filename)
             mesh = trimesh.load(mesh_path)
 
