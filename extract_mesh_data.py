@@ -10,8 +10,10 @@ def has_hidden_attribute(filepath):
 
 
 curr_directory = os.getcwd()
+print(curr_directory)
 db_path = os.path.join(curr_directory, "LabeledDB_new")
-
+#db_path = os.path.join(r"C:\Users\trekk\Documents\GitHub\Multimedia-Retrieval", "LabeledDB_new_small")
+print(db_path)
 data = [["Class", "Faces", "Vertices", "Type of faces", "Bounding box"]]
 
 for mesh_class in os.listdir(db_path):
@@ -29,6 +31,18 @@ for mesh_class in os.listdir(db_path):
 
             faces = len(mesh.faces)
             vertices = len(mesh.vertices)
+
+            if faces<3000:
+                print(faces)
+                mesh.vertices , mesh.faces=trimesh.remesh.subdivide(mesh.vertices,mesh.faces)
+                print(len(mesh.faces))
+                mesh.export('new_mesh.off')
+
+            #normalization
+
+            #mesh.apply_transform(trimesh.transformations.random_rotation_matrix())
+
+
 
             face_types = []
             for face in mesh.faces:
