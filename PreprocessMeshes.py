@@ -4,7 +4,7 @@ import os, stat
 from pathlib import Path
 import meshlabxml as mlx
 
-meshlabserver_path = '/Applications/meshlab.app/Contents/MacOS'
+meshlabserver_path = 'C:\\Program Files\\VCG\\MeshLab'
 os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
 
 def has_hidden_attribute(filepath):
@@ -12,7 +12,7 @@ def has_hidden_attribute(filepath):
 
 
 curr_directory = os.getcwd()
-db_path = os.path.join(curr_directory, "LabeledDB_new")
+db_path = os.path.join(curr_directory, "LabeledDB_new_small")
 
 for mesh_class in os.listdir(db_path):
 
@@ -27,26 +27,38 @@ for mesh_class in os.listdir(db_path):
             mesh_path = os.path.join(mesh_class_path, filename)
             mesh = trimesh.load(mesh_path)
             name = os.path.splitext(filename)[0]
-            mesh.export(os.path.join('converted',name + '.ply'))
+            name_labeled = mesh_class + '_' + name
+            mesh.export(os.path.join('converted', name_labeled + '.ply'))
 
             faces = len(mesh.faces)
+            converted_mesh_path = os.path.join(curr_directory, "converted", name_labeled + ".ply")
+            script = mlx.FilterScript(file_in=converted_mesh_path, file_out=os.path.join("simplified", name_labeled + ".ply"),
+                                      ml_version='2016.12')
             if faces > 20000:
-                converted_mesh_path = os.path.join(curr_directory, "converted", name + ".ply")
-                # script = mlx.FilterScript(file_in=converted_mesh_path, file_out=os.path.join("simplified", name + ".ply"), ml_version='2016.12')
 
-                # mlx.remesh.simplify(script, texture=False, faces=20000,
-                #     target_perc=0.0, quality_thr=1.0, preserve_boundary=True,
-                #     boundary_weight=1.0, preserve_normal=True,
-                #     optimal_placement=True, planar_quadric=True,
-                #     selected=False, extra_tex_coord_weight=1.0)
-                
-                # script.run_script()
+                mlx.remesh.simplify(script, texture=False, faces=20000,
+                    target_perc=0.0, quality_thr=1.0, preserve_boundary=True,
+                    boundary_weight=1.0, preserve_normal=True,
+                    optimal_placement=True, planar_quadric=True,
+                    selected=False, extra_tex_coord_weight=1.0)
 
-            elif faces < 20000:
-                new_vertices, new_faces = trimesh.remesh.subdivide(mesh.vertices, mesh.faces)
 
-                print("mesh "+str(filename))
-                print(len(mesh.faces))
-                print(len(new_faces))
+
+
+            if faces < 20000:
+                mlx.subdivide.loop(script,2)
+
+                mlx.remesh.simplify(script, texture=False, faces=20000,
+                                    target_perc=0.0, quality_thr=1.0, preserve_boundary=True,
+                                    boundary_weight=1.0, preserve_normal=True,
+                                    optimal_placement=True, planar_quadric=True,
+                                    selected=False, extra_tex_coord_weight=1.0)
+
+
+
+            script.run_script()
+
+
+
 
 
