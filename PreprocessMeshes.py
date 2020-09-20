@@ -4,7 +4,10 @@ import os, stat
 from pathlib import Path
 import meshlabxml as mlx
 
-meshlabserver_path = 'C:\\Program Files\\VCG\\MeshLab'
+# meshlabserver_path = 'C:\\Program Files\\VCG\\MeshLab'
+# os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
+
+meshlabserver_path = '/Applications/meshlab.app/Contents/MacOS'
 os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
 
 def has_hidden_attribute(filepath):
@@ -12,7 +15,7 @@ def has_hidden_attribute(filepath):
 
 
 curr_directory = os.getcwd()
-db_path = os.path.join(curr_directory, "LabeledDB_new_small")
+db_path = os.path.join(curr_directory, "LabeledDB_new")
 
 for mesh_class in os.listdir(db_path):
 
