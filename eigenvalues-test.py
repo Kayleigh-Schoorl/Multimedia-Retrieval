@@ -52,17 +52,9 @@ print("\n==> eigenvectors")
 print(eigenvectors)
 
 
-
 indices = np.argsort(eigenvalues)
-# x_old = eigenvectors[indices[0]]
-# y_old = eigenvectors[indices[1]]
-# z_old = eigenvectors[indices[2]]
+R = np.linalg.inv(np.transpose(np.array([eigenvectors[indices[2]],eigenvectors[indices[1]],eigenvectors[indices[0]]])))
 
-R = np.linalg.inv(np.transpose(np.array([eigenvectors[indices[0]],eigenvectors[indices[1]],eigenvectors[indices[2]]])))
-
-
-transformed = np.transpose(R).dot(np.transpose(mesh.vertices))
-
-mesh.show()
+transformed = R.dot(np.transpose(mesh.vertices))
 mesh.vertices = np.transpose(transformed)
 mesh.show()
