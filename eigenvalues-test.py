@@ -52,43 +52,16 @@ print("\n==> eigenvectors")
 print(eigenvectors)
 
 
-# Code for computing angle between two n-dimensional vectors:
-# https://stackoverflow.com/questions/2827393/angles-between-two-n-dimensional-vectors-in-python/13849249#13849249
-def unit_vector(vector):
-    return vector / np.linalg.norm(vector)
-
-def angle_between(v1, v2):
-    v1_u = unit_vector(v1)
-    v2_u = unit_vector(v2)
-    return np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0))
-
-
-
-
 
 indices = np.argsort(eigenvalues)
 # x_old = eigenvectors[indices[0]]
 # y_old = eigenvectors[indices[1]]
 # z_old = eigenvectors[indices[2]]
 
-
-x_old,y_old,z_old = np.linalg.inv((eigenvectors[indices[0]],eigenvectors[indices[1]],eigenvectors[indices[2]]))
-
-x_new = np.array((1,0,0))
-y_new = np.array((0,1,0))
-z_new = np.array((0,0,1))
+R = np.linalg.inv(np.transpose(np.array([eigenvectors[indices[0]],eigenvectors[indices[1]],eigenvectors[indices[2]]])))
 
 
-M11, M12, M13 = np.dot(x_old, x_new), np.dot(x_old, y_new), np.dot(x_old, z_new)
-M21, M22, M23 = np.dot(y_old, x_new), np.dot(y_old, y_new), np.dot(y_old, z_new)
-M31, M32, M33 = np.dot(z_old, x_new), np.dot(z_old, y_new), np.dot(z_old, z_new)
-
-# set up rotation matrix
-R = np.array([[M11, M12, M13],
-                [M21, M22, M23],
-                [M31, M32, M33]])
-
-transformed = np.linalg.inv(np.transpose(R)).dot(np.transpose(mesh.vertices))
+transformed = np.transpose(R).dot(np.transpose(mesh.vertices))
 
 mesh.show()
 mesh.vertices = np.transpose(transformed)
