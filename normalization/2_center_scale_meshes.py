@@ -149,27 +149,23 @@ def has_hidden_attribute(filepath):
     return bool(os.stat(filepath).st_file_attributes & stat.FILE_ATTRIBUTE_HIDDEN)
 
 
+os.chdir("..")
 curr_directory = os.getcwd()
-db_path = os.path.join(curr_directory, "simplified")
+db_path = os.path.join(curr_directory, "meshes", "simplified")
 
 for filename in os.listdir(db_path):
-
-    #exclude hidden files
-    if filename.startswith("."):
-        continue
-
 
     extension = os.path.splitext(filename)[1]
     if extension == ".off" or extension == ".ply":
         mesh_path = os.path.join(db_path, filename)
         name = os.path.splitext(filename)[0]
-        normalized_path=os.path.join(curr_directory, "normalized")
+        normalized_path=os.path.join(curr_directory, "meshes", "normalized")
 
-        simplified_mesh_path = os.path.join(curr_directory, "simplified", name + ".ply")
+        simplified_mesh_path = os.path.join(curr_directory, "meshes", "simplified", name + ".ply")
 
         # #scale
         scaling_script = mlx.FilterScript(file_in=simplified_mesh_path,
-                                  file_out=os.path.join("scaled", name + ".ply"),
+                                  file_out=os.path.join("meshes", "scaled", name + ".ply"),
                                   ml_version='2016.12')
 
 
@@ -177,11 +173,11 @@ for filename in os.listdir(db_path):
         scaling_script.run_script()
 
         #center
-        centering_script = mlx.FilterScript(file_in=os.path.join("scaled", name + ".ply"),
-                                  file_out=os.path.join("normalized", name + ".ply"),
+        centering_script = mlx.FilterScript(file_in=os.path.join("meshes", "scaled", name + ".ply"),
+                                  file_out=os.path.join("meshes", "normalized", name + ".ply"),
                                   ml_version='2016.12')
 
-        aabb = mlx.files.measure_aabb(os.path.join("scaled", name + ".ply"))
+        aabb = mlx.files.measure_aabb(os.path.join("meshes", "scaled", name + ".ply"))
         mlx.transform.translate(centering_script, np.negative(aabb['center']))
         centering_script.run_script()
 

@@ -14,7 +14,9 @@ def has_hidden_attribute(filepath):
     return bool(os.stat(filepath).st_file_attributes & stat.FILE_ATTRIBUTE_HIDDEN)
 
 
+os.chdir("..")
 curr_directory = os.getcwd()
+print(curr_directory)
 db_path = os.path.join(curr_directory, "LabeledDB_new")
 
 for mesh_class in os.listdir(db_path):
@@ -31,10 +33,10 @@ for mesh_class in os.listdir(db_path):
             mesh = trimesh.load(mesh_path)
             name = os.path.splitext(filename)[0]
             name_labeled = mesh_class + '_' + name
-            mesh.export(os.path.join('converted', name_labeled + '.ply'))
+            mesh.export(os.path.join('meshes', 'converted', name_labeled + '.ply'))
 
             faces = len(mesh.faces)
-            converted_mesh_path = os.path.join(curr_directory, "converted", name_labeled + ".ply")
+            converted_mesh_path = os.path.join(curr_directory, "meshes", "converted", name_labeled + ".ply")
             script = mlx.FilterScript(file_in=converted_mesh_path, file_out=os.path.join("simplified", name_labeled + ".ply"),
                                       ml_version='2016.12')
             if faces > 20000:
@@ -45,9 +47,6 @@ for mesh_class in os.listdir(db_path):
                     optimal_placement=True, planar_quadric=True,
                     selected=False, extra_tex_coord_weight=1.0)
 
-
-
-
             if faces < 20000:
                 mlx.subdivide.loop(script,2)
 
@@ -57,11 +56,6 @@ for mesh_class in os.listdir(db_path):
                                     optimal_placement=True, planar_quadric=True,
                                     selected=False, extra_tex_coord_weight=1.0)
 
-
-
             script.run_script()
-
-
-
 
 
