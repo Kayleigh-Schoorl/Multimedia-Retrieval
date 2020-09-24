@@ -27,13 +27,6 @@ for vertex in mesh.vertices:
 A = np.transpose(np.array(coords))
 
 
-print(A.shape)
-
-#A = np.zeros((3, n_points))
-#A[0] = x_coords
-#A[1] = y_coords
-#A[2] = z_coords
-
 # compute the covariance matrix for A 
 # see the documentation at 
 # https://docs.scipy.org/doc/numpy/reference/generated/numpy.cov.html
