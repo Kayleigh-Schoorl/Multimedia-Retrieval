@@ -10,10 +10,7 @@ def has_hidden_attribute(filepath):
 
 
 curr_directory = os.getcwd()
-print(curr_directory)
-db_path = os.path.join(curr_directory, "normalized")
-#db_path = os.path.join(r"C:\Users\trekk\Documents\GitHub\Multimedia-Retrieval", "LabeledDB_new_small")
-print(db_path)
+db_path = os.path.join(curr_directory, "meshes", "normalized")
 data = []
 
 for filename in os.listdir(db_path):
@@ -51,14 +48,12 @@ no_faces = []
 
 row = 0
 for mesh_data in data:
-    print(mesh_data[1])
     no_faces.append(mesh_data[1])
 
-bins = [0, 10000, 20000, 30000, 40000, 50000, 60000]
-plt.hist(no_faces, bins=13, linewidth=1, edgecolor='black',)
-#plt.xticks(bins)
-#plt.xticks = bins
+bins = np.array([0, 10000, 20000, 30000, 40000, 50000, 60000])
+plt.hist(no_faces, bins=13, linewidth=1, edgecolor='black')
+plt.ticklabel_format(useOffset=False)
+plt.xlim(bins.min(), bins.max())
 plt.xlabel("Faces")
 plt.ylabel("3D shapes")
 plt.show()
-
