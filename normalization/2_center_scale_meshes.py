@@ -3,7 +3,7 @@ import trimesh
 import os, stat
 from pathlib import Path
 import meshlabxml as mlx
-
+import matplotlib.pyplot as plt
 
 # Code for writing a MeshLab script for scaling by 3DLIRIOUS
 # https://github.com/3DLIRIOUS/MeshLabXML
@@ -139,10 +139,10 @@ def scale_fixed(script, value=1.0, uniform=True, center_pt='origin',
 
 
 
-# meshlabserver_path = 'C:\\Program Files\\VCG\\MeshLab'
+meshlabserver_path = 'C:\\Program Files\\VCG\\MeshLab'
 # os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
 
-meshlabserver_path = '/Applications/meshlab.app/Contents/MacOS'
+#meshlabserver_path = '/Applications/meshlab.app/Contents/MacOS'
 os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
 
 def has_hidden_attribute(filepath):
@@ -152,6 +152,9 @@ def has_hidden_attribute(filepath):
 os.chdir("..")
 curr_directory = os.getcwd()
 db_path = os.path.join(curr_directory, "meshes", "simplified")
+
+distance_before=[]
+distance_after=[]
 
 for filename in os.listdir(db_path):
 
@@ -178,6 +181,35 @@ for filename in os.listdir(db_path):
                                   ml_version='2016.12')
 
         aabb = mlx.files.measure_aabb(os.path.join("meshes", "scaled", name + ".ply"))
+        center_before = aabb['center']
+        print("cent_bef =  "+str(center_before))
         mlx.transform.translate(centering_script, np.negative(aabb['center']))
         centering_script.run_script()
+
+        aabb = mlx.files.measure_aabb(os.path.join("meshes", "normalized", name + ".ply"))
+        center_after = aabb['center']
+        print("cent_aft =  "+str(center_after))
+
+
+        distance_before.append(abs(np.sqrt(center_before[0]**2+center_before[1]**2+center_before[2]**2)))
+        distance_after.append(abs(np.sqrt(center_after[0]**2+center_after[1]**2+center_after[2]**2)))
+
+
+
+bins = np.array([-0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5])
+plt.hist(distance_before, bins=13, linewidth=1, edgecolor='black')
+plt.ticklabel_format(useOffset=False)
+plt.xlim(bins.min(), bins.max())
+plt.xlabel("Faces")
+plt.ylabel("3D shapes")
+plt.show()
+
+bins = np.array([-0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5])
+plt.hist(distance_after, bins=13, linewidth=1, edgecolor='black')
+plt.ticklabel_format(useOffset=False)
+plt.xlim(bins.min(), bins.max())
+plt.xlabel("Faces")
+plt.ylabel("3D shapes")
+plt.show()
+
 

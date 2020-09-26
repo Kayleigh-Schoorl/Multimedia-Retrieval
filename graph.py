@@ -10,7 +10,7 @@ def has_hidden_attribute(filepath):
 
 
 curr_directory = os.getcwd()
-db_path = os.path.join(curr_directory, "meshes", "normalized")
+db_path = os.path.join(curr_directory, "meshes", "scaled")
 data = []
 
 for filename in os.listdir(db_path):
@@ -26,6 +26,8 @@ for filename in os.listdir(db_path):
 
         faces = len(mesh.faces)
         vertices = len(mesh.vertices)
+        center = mesh.centroid
+        scale = mesh.scale
 
         face_types = []
         for face in mesh.faces:
@@ -34,26 +36,36 @@ for filename in os.listdir(db_path):
                 face_types.append(no)
 
         bounds = mesh.bounds
-        
-        data.append(['mesh_class', faces, vertices, face_types, bounds])
+        print(scale)
+        data.append(['mesh_class', faces, vertices, face_types, bounds, center, scale])
 
 
 
 import matplotlib.pyplot as plt
-import pandas as pd
+
 
 no_faces = []
-
+no_scale = []
 
 
 row = 0
 for mesh_data in data:
     no_faces.append(mesh_data[1])
+    no_scale.append(mesh_data[6])
 
-bins = np.array([0, 10000, 20000, 30000, 40000, 50000, 60000])
-plt.hist(no_faces, bins=13, linewidth=1, edgecolor='black')
+# bins = np.array([0, 10000, 20000, 30000, 40000, 50000, 60000])
+# plt.hist(no_faces, bins=13, linewidth=1, edgecolor='black')
+# plt.ticklabel_format(useOffset=False)
+# plt.xlim(bins.min(), bins.max())
+# plt.xlabel("Faces")
+# plt.ylabel("3D shapes")
+# plt.show()
+
+
+bins = np.array([ 1, 1.2, 1.4,1.6,1.8, 2 , 2.2 , 2.4, 2.6, 2.8, 3])
+plt.hist(no_scale, bins=13, linewidth=1, edgecolor='black')
 plt.ticklabel_format(useOffset=False)
 plt.xlim(bins.min(), bins.max())
-plt.xlabel("Faces")
+plt.xlabel("Scale")
 plt.ylabel("3D shapes")
 plt.show()
