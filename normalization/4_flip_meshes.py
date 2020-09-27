@@ -25,10 +25,6 @@ for filename in os.listdir(db_path):
             f_y += np.sign(vertex[1])
             f_z += np.sign(vertex[2])
 
-        print(f_x)
-        print(f_y)
-        print(f_z)
-
         F = np.array([[-np.sign(f_x), 0, 0],
                         [0, -np.sign(f_y), 0],
                         [0, 0, -np.sign(f_z)]])

@@ -4,7 +4,7 @@ import os
 
 os.chdir("..")
 curr_directory = os.getcwd()
-db_path = os.path.join(curr_directory, "meshes", "simplified")
+db_path = os.path.join(curr_directory, "meshes", "aligned")
 
 for filename in os.listdir(db_path):
 
@@ -13,37 +13,39 @@ for filename in os.listdir(db_path):
         mesh_path = os.path.join(db_path, filename)
         mesh = trimesh.load(mesh_path)
 
-        coords = []
+        for i in range(4):
 
-        for vertex in mesh.vertices:
-            coords.append(vertex)
+            coords = []
 
-        A = np.transpose(np.array(coords))
+            for vertex in mesh.vertices:
+                coords.append(vertex)
 
-
-        # compute the covariance matrix for A 
-        # see the documentation at 
-        # https://docs.scipy.org/doc/numpy/reference/generated/numpy.cov.html
-        # this function expects that each row of A represents a variable, 
-        # and each column a single observation of all those variables
-        A_cov = np.cov(A)  # 3x3 matrix
-
-        # computes the eigenvalues and eigenvectors for the 
-        # covariance matrix. See documentation at  
-        # https://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.eig.html 
-        eigenvalues, eigenvectors = np.linalg.eig(A_cov)
-
-        print("==> eigenvalues for (x, y, z)")
-        print(eigenvalues)
-        print("\n==> eigenvectors")
-        print(eigenvectors)
+            A = np.transpose(np.array(coords))
 
 
-        indices = np.argsort(eigenvalues)
-        R = np.linalg.inv(np.transpose(np.array([eigenvectors[indices[2]],eigenvectors[indices[1]],eigenvectors[indices[0]]])))
+            # compute the covariance matrix for A 
+            # see the documentation at 
+            # https://docs.scipy.org/doc/numpy/reference/generated/numpy.cov.html
+            # this function expects that each row of A represents a variable, 
+            # and each column a single observation of all those variables
+            A_cov = np.cov(A)  # 3x3 matrix
 
-        transformed = R.dot(np.transpose(mesh.vertices))
-        mesh.vertices = np.transpose(transformed)
+            # computes the eigenvalues and eigenvectors for the 
+            # covariance matrix. See documentation at  
+            # https://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.eig.html 
+            eigenvalues, eigenvectors = np.linalg.eig(A_cov)
+
+            print("==> eigenvalues for (x, y, z)")
+            print(eigenvalues)
+            print("\n==> eigenvectors")
+            print(eigenvectors)
+
+
+            indices = np.argsort(eigenvalues)
+            R = np.linalg.inv(np.array([eigenvectors[indices[2]],eigenvectors[indices[1]],eigenvectors[indices[0]]]))
+
+            transformed = R.dot(np.transpose(mesh.vertices))
+            mesh.vertices = np.transpose(transformed)
 
         name = os.path.splitext(filename)[0]
         export_path=os.path.join(curr_directory, "meshes", "aligned", filename)

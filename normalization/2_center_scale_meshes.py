@@ -160,14 +160,10 @@ for filename in os.listdir(db_path):
 
     extension = os.path.splitext(filename)[1]
     if extension == ".off" or extension == ".ply":
-        mesh_path = os.path.join(db_path, filename)
         name = os.path.splitext(filename)[0]
-        normalized_path=os.path.join(curr_directory, "meshes", "normalized")
-
-        simplified_mesh_path = os.path.join(curr_directory, "meshes", "simplified", name + ".ply")
 
         # #scale
-        scaling_script = mlx.FilterScript(file_in=simplified_mesh_path,
+        scaling_script = mlx.FilterScript(file_in=os.path.join("meshes", "simplified", name + ".ply"),
                                   file_out=os.path.join("meshes", "scaled", name + ".ply"),
                                   ml_version='2016.12')
 
