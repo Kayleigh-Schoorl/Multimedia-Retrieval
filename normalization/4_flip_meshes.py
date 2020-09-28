@@ -5,7 +5,7 @@ import os
 
 os.chdir("..")
 curr_directory = os.getcwd()
-db_path = os.path.join(curr_directory, "meshes", "simplified")
+db_path = os.path.join(curr_directory, "meshes", "aligned")
 
 for filename in os.listdir(db_path):
 
@@ -25,9 +25,13 @@ for filename in os.listdir(db_path):
             f_y += np.sign(vertex[1])
             f_z += np.sign(vertex[2])
 
-        F = np.array([[-np.sign(f_x), 0, 0],
-                        [0, -np.sign(f_y), 0],
-                        [0, 0, -np.sign(f_z)]])
+        sign_x = -np.sign(f_x) if np.sign(f_x) else 1
+        sign_y = -np.sign(f_y) if np.sign(f_y) else 1
+        sign_z = -np.sign(f_z) if np.sign(f_z) else 1
+
+        F = np.array([[sign_x, 0, 0],
+                        [0, sign_y, 0],
+                        [0, 0, sign_z]])
 
         transformed = F.dot(np.transpose(mesh.vertices))
         mesh.vertices = np.transpose(transformed)
