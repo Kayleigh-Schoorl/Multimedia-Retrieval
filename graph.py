@@ -5,6 +5,7 @@ import os, stat
 from pathlib import Path
 
 
+
 def has_hidden_attribute(filepath):
     return bool(os.stat(filepath).st_file_attributes & stat.FILE_ATTRIBUTE_HIDDEN)
 
