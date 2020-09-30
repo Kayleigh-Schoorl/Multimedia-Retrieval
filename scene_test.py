@@ -8,48 +8,75 @@ curr_directory = os.getcwd()
 
 db_path = os.path.join(curr_directory, "meshes", "flipped")
 
+directions = ["front", "side", "top"]
+
 for filename in os.listdir(db_path):
 
     extension = os.path.splitext(filename)[1]
     mesh_name = os.path.splitext(filename)[0]
 
-    if extension == ".off" or extension == ".ply":
-        mesh_path = os.path.join(db_path, filename)
-        mesh = trimesh.load(mesh_path)
-
-    scene = mesh.scene()
-
-    # rotate = trimesh.transformations.rotation_matrix(
-    #     angle=np.radians(10.0),
-    #     direction=[0, 1, 0],
-    #     point=scene.centroid)
-
-
-
-    time.sleep(0.5)
-    # increment the file name
-    try:
-        file_name = os.path.join(curr_directory, "images", "renders", mesh_name+'_render' + '.png')
-        # save a render of the object as a png
-        png = scene.save_image(resolution=[600, 400], visible=True)
-
-        with open(file_name, 'wb') as f:
-            f.write(png)
-            f.close()
-    except BaseException as E:
-        print("unable to save image", str(E))
+    if extension != ".off" and extension != ".ply":
         continue
 
+    if not os.path.exists(os.path.join(curr_directory, "images", "renders", mesh_name)):
+        os.makedirs(os.path.join(curr_directory, "images", "renders", mesh_name))
+
+    mesh_path = os.path.join(db_path, filename)
+    mesh = trimesh.load(mesh_path)
+
+    for direction in directions:
+
+        if direction == "side":
+            R = np.array([[0, 0, 1],
+                            [0, 1, 0],
+                            [-1, 0, 0]])
+
+            transformed = R.dot(np.transpose(mesh.vertices))
+            mesh.vertices = np.transpose(transformed)
+        
+        elif direction == "top":
+            R = np.array([[1, 0, 0],
+                [0, 0, 1],
+                [0, -1, 0]])
+
+            transformed = R.dot(np.transpose(mesh.vertices))
+            mesh.vertices = np.transpose(transformed)
+
+        scene = mesh.scene()
+
+        time.sleep(0.5)
+        # increment the file name
+        try:
+            file_name = os.path.join(curr_directory, "images", "renders", mesh_name, mesh_name+'_'+direction+'_render' + '.png')
+            # save a render of the object as a png
+            png = scene.save_image(resolution=[600, 400], visible=True)
 
 
-#black and white images
+
+            with open(file_name, 'wb') as f:
+                f.write(png)
+                f.close()
+        except BaseException as E:
+            print("unable to save image", str(E))
+            continue
+
+
 
 db_path = os.path.join(curr_directory, "images", "renders")
-for filename in os.listdir(db_path):
+for folder in os.listdir(db_path):
+    if folder.startswith("."):
+        continue
+    for filename in os.listdir(os.path.join(db_path, folder)):
 
-    extension = os.path.splitext(filename)[1]
-    mesh_name = os.path.splitext(filename)[0]
+        extension = os.path.splitext(filename)[1]
+        mesh_name = os.path.splitext(filename)[0]
 
-    image = cv2.imread(os.path.join(curr_directory, "images", "renders", mesh_name+'.png'))
-    (thresh, blackAndWhiteImage) = cv2.threshold(image, 254, 255, cv2.THRESH_BINARY)
-    cv2.imwrite(os.path.join(curr_directory, "images", "bw", mesh_name+'_bw' + '.png'),blackAndWhiteImage)
+        if extension != ".png":
+            continue
+
+        if not os.path.exists(os.path.join(curr_directory, "images", "bw", folder)):
+            os.makedirs(os.path.join(curr_directory, "images", "bw", folder))
+
+        image = cv2.imread(os.path.join(curr_directory, "images", "renders", folder, mesh_name+'.png'))
+        (thresh, blackAndWhiteImage) = cv2.threshold(image, 254, 255, cv2.THRESH_BINARY)
+        cv2.imwrite(os.path.join(curr_directory, "images", "bw", folder, mesh_name+'_bw' + '.png'),blackAndWhiteImage)
