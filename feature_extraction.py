@@ -12,9 +12,8 @@ for folder in os.listdir(db_path):
         continue
 
     for filename in os.listdir(os.path.join(db_path, folder)):
-        if "Vase" not in filename:
-            continue
-        print(filename)
+
+        print(filename + "\n")
 
         # Read image
         image_original = cv2.imread(os.path.join(db_path, folder, filename),0)
@@ -38,4 +37,16 @@ for folder in os.listdir(db_path):
         circularity = 1 / compactness
         print("Circularity: " + str(circularity))
 
-        print("\n")
+        # Get axis-aligned bounding box
+        x,y,w,h = cv2.boundingRect(contours[0])
+        print("\nAxis-aligned bounding box:")
+        print("Top-left coordinate: (" + str(x) + ", " + str(y) + ")")
+        print("Width: " + str(w))
+        print("Height: " + str(h) + "\n")
+
+        # Compute rectangularity (using object oriented bounding box)
+        rect = cv2.minAreaRect(contours[0])
+        rectangularity = area_2 / (rect[1][0] * rect[1][1])
+        print("Rectangularity: " + str(rectangularity))
+
+        print("\n\n")
