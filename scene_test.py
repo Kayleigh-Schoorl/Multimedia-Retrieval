@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import os
 import time
+import multiprocessing
 
 curr_directory = os.getcwd()
 
@@ -10,56 +11,60 @@ db_path = os.path.join(curr_directory, "meshes", "flipped")
 
 directions = ["front", "side", "top"]
 
-for filename in os.listdir(db_path):
+def get_image_renders():
+    for filename in os.listdir(db_path):
 
-    extension = os.path.splitext(filename)[1]
-    mesh_name = os.path.splitext(filename)[0]
+        extension = os.path.splitext(filename)[1]
+        mesh_name = os.path.splitext(filename)[0]
 
-    if extension != ".off" and extension != ".ply":
-        continue
-
-    if not os.path.exists(os.path.join(curr_directory, "images", "renders", mesh_name)):
-        os.makedirs(os.path.join(curr_directory, "images", "renders", mesh_name))
-
-    mesh_path = os.path.join(db_path, filename)
-    mesh = trimesh.load(mesh_path)
-
-    for direction in directions:
-
-        if direction == "side":
-            R = np.array([[0, 0, 1],
-                            [0, 1, 0],
-                            [-1, 0, 0]])
-
-            transformed = R.dot(np.transpose(mesh.vertices))
-            mesh.vertices = np.transpose(transformed)
-        
-        elif direction == "top":
-            R = np.array([[1, 0, 0],
-                [0, 0, 1],
-                [0, -1, 0]])
-
-            transformed = R.dot(np.transpose(mesh.vertices))
-            mesh.vertices = np.transpose(transformed)
-
-        scene = mesh.scene()
-
-        time.sleep(0.5)
-        # increment the file name
-        try:
-            file_name = os.path.join(curr_directory, "images", "renders", mesh_name, mesh_name+'_'+direction+'_render' + '.png')
-            # save a render of the object as a png
-            png = scene.save_image(resolution=[600, 400], visible=True)
-
-
-
-            with open(file_name, 'wb') as f:
-                f.write(png)
-                f.close()
-        except BaseException as E:
-            print("unable to save image", str(E))
+        if extension != ".off" and extension != ".ply":
             continue
 
+        if not os.path.exists(os.path.join(curr_directory, "images", "renders", mesh_name)):
+            os.makedirs(os.path.join(curr_directory, "images", "renders", mesh_name))
+
+        mesh_path = os.path.join(db_path, filename)
+        mesh = trimesh.load(mesh_path)
+
+        for direction in directions:
+
+            if direction == "side":
+                R = np.array([[0, 0, 1],
+                                [0, 1, 0],
+                                [-1, 0, 0]])
+
+                transformed = R.dot(np.transpose(mesh.vertices))
+                mesh.vertices = np.transpose(transformed)
+            
+            elif direction == "top":
+                R = np.array([[1, 0, 0],
+                    [0, 0, 1],
+                    [0, -1, 0]])
+
+                transformed = R.dot(np.transpose(mesh.vertices))
+                mesh.vertices = np.transpose(transformed)
+
+            scene = mesh.scene()
+
+            # increment the file name
+            try:
+                file_name = os.path.join(curr_directory, "images", "renders", mesh_name, mesh_name+'_'+direction+'_render' + '.png')
+                # save a render of the object as a png
+                png = scene.save_image(resolution=[600, 400], visible=True)
+
+
+
+                with open(file_name, 'wb') as f:
+                    f.write(png)
+                    f.close()
+            except BaseException as E:
+                print("unable to save image", str(E))
+                continue
+
+if __name__ == '__main__':
+    p = multiprocessing.Process(target=get_image_renders)
+    p.start()
+    p.join()
 
 
 db_path = os.path.join(curr_directory, "images", "renders")
