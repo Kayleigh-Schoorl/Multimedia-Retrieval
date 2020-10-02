@@ -13,6 +13,9 @@ for folder in os.listdir(db_path):
 
     for filename in os.listdir(os.path.join(db_path, folder)):
 
+        if "Vase" not in filename:
+            continue
+
         print(filename + "\n")
 
         # Read image
@@ -48,5 +51,15 @@ for folder in os.listdir(db_path):
         rect = cv2.minAreaRect(contours[0])
         rectangularity = area_2 / (rect[1][0] * rect[1][1])
         print("Rectangularity: " + str(rectangularity))
+
+        # Get diameter
+        _,radius = cv2.minEnclosingCircle(contours[0])
+        diameter = radius*2
+        print("Diameter: " + str(diameter))
+
+        # Compute eccentricity
+        _,(MA,ma),angle = cv2.fitEllipse(contours[0])
+        eccentricity = MA / ma
+        print("Eccentricity: " + str(eccentricity))
 
         print("\n\n")
