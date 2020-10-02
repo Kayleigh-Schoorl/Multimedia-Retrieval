@@ -11,8 +11,12 @@ db_path = os.path.join(curr_directory, "meshes", "flipped")
 
 directions = ["front", "side", "top"]
 
-def get_image_renders():
-    for filename in os.listdir(db_path):
+def get_image_renders(class_name):
+
+    current_files = os.listdir(db_path)
+
+    files = [f for f in current_files if class_name in f]
+    for filename in files:
 
         extension = os.path.splitext(filename)[1]
         mesh_name = os.path.splitext(filename)[0]
@@ -50,9 +54,7 @@ def get_image_renders():
             try:
                 file_name = os.path.join(curr_directory, "images", "renders", mesh_name, mesh_name+'_'+direction+'_render' + '.png')
                 # save a render of the object as a png
-                png = scene.save_image(resolution=[600, 400], visible=True)
-
-
+                png = scene.save_image(resolution=[600, 400], visible=False)
 
                 with open(file_name, 'wb') as f:
                     f.write(png)
@@ -61,17 +63,42 @@ def get_image_renders():
                 print("unable to save image", str(E))
                 continue
 
+class_names = ["Airplane",
+"Ant",
+"Armadillo",
+"Bearing",
+"Bird",
+"Bust",
+"Chair",
+"Cup",
+"Fish",
+"FourLeg",
+"Glasses",
+"Hand",
+"Human",
+"Mech",
+"Octopus",
+"Plier",
+"Table",
+"Teddy",
+"Vase"]
+
 if __name__ == '__main__':
-    p = multiprocessing.Process(target=get_image_renders)
-    p.start()
-    p.join()
+    jobs = []
+    for c in class_names:
+        p = multiprocessing.Process(target=get_image_renders,args=(c,))
+        jobs.append(p)
+        p.start()
+
+    for job in jobs:
+        job.join()
 
 
-db_path = os.path.join(curr_directory, "images", "renders")
-for folder in os.listdir(db_path):
+rendered_images_path = os.path.join(curr_directory, "images", "renders")
+for folder in os.listdir(rendered_images_path):
     if folder.startswith("."):
         continue
-    for filename in os.listdir(os.path.join(db_path, folder)):
+    for filename in os.listdir(os.path.join(rendered_images_path, folder)):
 
         extension = os.path.splitext(filename)[1]
         mesh_name = os.path.splitext(filename)[0]
