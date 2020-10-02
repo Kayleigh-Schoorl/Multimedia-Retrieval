@@ -54,7 +54,7 @@ def get_image_renders(class_name):
             try:
                 file_name = os.path.join(curr_directory, "images", "renders", mesh_name, mesh_name+'_'+direction+'_render' + '.png')
                 # save a render of the object as a png
-                png = scene.save_image(resolution=[600, 400], visible=False)
+                png = scene.save_image(resolution=[600, 400], visible=True)
 
                 with open(file_name, 'wb') as f:
                     f.write(png)
@@ -63,25 +63,13 @@ def get_image_renders(class_name):
                 print("unable to save image", str(E))
                 continue
 
-class_names = ["Airplane",
-"Ant",
-"Armadillo",
-"Bearing",
-"Bird",
-"Bust",
-"Chair",
-"Cup",
-"Fish",
-"FourLeg",
-"Glasses",
-"Hand",
-"Human",
-"Mech",
-"Octopus",
-"Plier",
-"Table",
-"Teddy",
-"Vase"]
+
+class_names = []
+for filename in os.listdir(db_path):
+    mesh_name = os.path.splitext(filename)[0]
+    class_name = mesh_name.split('_')[0]
+    if class_name not in class_names:
+        class_names.append(class_name)
 
 if __name__ == '__main__':
     jobs = []
