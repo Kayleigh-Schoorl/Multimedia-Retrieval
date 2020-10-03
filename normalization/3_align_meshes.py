@@ -4,7 +4,7 @@ import os
 
 os.chdir("..")
 curr_directory = os.getcwd()
-db_path = os.path.join(curr_directory, "meshes", "aligned")
+db_path = os.path.join(curr_directory, "meshes", "normalized")
 
 for filename in os.listdir(db_path):
 

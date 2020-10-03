@@ -4,10 +4,10 @@ import os, stat
 from pathlib import Path
 import meshlabxml as mlx
 
-# meshlabserver_path = 'C:\\Program Files\\VCG\\MeshLab'
+meshlabserver_path = 'C:\\Program Files\\VCG\\MeshLab'
 # os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
 
-meshlabserver_path = '/Applications/meshlab.app/Contents/MacOS'
+#meshlabserver_path = '/Applications/meshlab.app/Contents/MacOS'
 os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
 
 def has_hidden_attribute(filepath):
@@ -37,7 +37,7 @@ for mesh_class in os.listdir(db_path):
 
             faces = len(mesh.faces)
             converted_mesh_path = os.path.join(curr_directory, "meshes", "converted", name_labeled + ".ply")
-            script = mlx.FilterScript(file_in=converted_mesh_path, file_out=os.path.join("simplified", name_labeled + ".ply"),
+            script = mlx.FilterScript(file_in=converted_mesh_path, file_out=os.path.join("meshes","simplified", name_labeled + ".ply"),
                                       ml_version='2016.12')
             if faces > 20000:
 
