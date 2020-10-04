@@ -40,6 +40,12 @@ for folder in os.listdir(db_path):
         circularity = 1 / compactness
         print("Circularity: " + str(circularity))
 
+        # Compute centroid
+        M = cv2.moments(contours[0])
+        cX = int(M["m10"] / M["m00"])
+        cY = int(M["m01"] / M["m00"])
+        print("Centroid: (" + str(cX) + ", " + str(cY) + ")")
+
         # Get axis-aligned bounding box
         x,y,w,h = cv2.boundingRect(contours[0])
         print("\nAxis-aligned bounding box:")

@@ -39,6 +39,7 @@ for mesh_class in os.listdir(db_path):
             converted_mesh_path = os.path.join(curr_directory, "meshes", "converted", name_labeled + ".ply")
             script = mlx.FilterScript(file_in=converted_mesh_path, file_out=os.path.join("meshes","simplified", name_labeled + ".ply"),
                                       ml_version='2016.12')
+
             if faces > 20000:
 
                 mlx.remesh.simplify(script, texture=False, faces=20000,
@@ -48,7 +49,9 @@ for mesh_class in os.listdir(db_path):
                     selected=False, extra_tex_coord_weight=1.0)
 
             if faces < 20000:
-                mlx.subdivide.loop(script,2)
+                while (faces < 20000):
+                    mlx.subdivide.loop(script)
+                    faces *= 4
 
                 mlx.remesh.simplify(script, texture=False, faces=20000,
                                     target_perc=0.0, quality_thr=1.0, preserve_boundary=True,
