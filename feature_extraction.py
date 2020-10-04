@@ -3,6 +3,7 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+import time
 
 curr_directory = os.getcwd()
 db_path = os.path.join(curr_directory, "images", "bw")
@@ -13,8 +14,8 @@ for folder in os.listdir(db_path):
 
     for filename in os.listdir(os.path.join(db_path, folder)):
 
-        if "Vase" not in filename:
-            continue
+        #if "Glasses_46_top_render_bw" not in filename:
+        #    continue
 
         print(filename + "\n")
 
@@ -60,12 +61,20 @@ for folder in os.listdir(db_path):
 
         # Get diameter
         _,radius = cv2.minEnclosingCircle(contours[0])
-        diameter = radius*2
-        print("Diameter: " + str(diameter))
+        diameter_1 = radius*2
+        print("Diameter: " + str(diameter_1))
 
         # Compute eccentricity
         _,(MA,ma),angle = cv2.fitEllipse(contours[0])
         eccentricity = MA / ma
         print("Eccentricity: " + str(eccentricity))
+
+        # Get length of skeleton
+        # Install library opencv-contrib-python to use this!
+        skeleton = cv2.ximgproc.thinning(image, thinningType=0)
+        skeleton_length = cv2.countNonZero(skeleton)
+        print("Length of skeleton: " + str(skeleton_length))
+        cv2.imshow("Skeleton", skeleton)
+        cv2.waitKey()
 
         print("\n\n")
