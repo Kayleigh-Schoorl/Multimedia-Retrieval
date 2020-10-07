@@ -14,7 +14,7 @@ for folder in os.listdir(db_path):
 
     for filename in os.listdir(os.path.join(db_path, folder)):
 
-        #if "Glasses_46_top_render_bw" not in filename:
+        #if "Mech_328_side_render_bw" not in filename:
         #    continue
 
         print(filename + "\n")
@@ -27,9 +27,11 @@ for folder in os.listdir(db_path):
         area = cv2.countNonZero(image)
         print("Area: " + str(area))
 
-        # Get perimeter (only outer perimeter)
+        # Get perimeter (total for all contours)
         contours, hierarchy = cv2.findContours(image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        perimeter = int(cv2.arcLength(contours[0],True))
+        perimeter = 0
+        for contour in contours:
+            perimeter += int(cv2.arcLength(contour,True))
         print("Perimeter: " + str(perimeter))
 
         # Compute compactness
@@ -74,7 +76,7 @@ for folder in os.listdir(db_path):
         skeleton = cv2.ximgproc.thinning(image, thinningType=0)
         skeleton_length = cv2.countNonZero(skeleton)
         print("Length of skeleton: " + str(skeleton_length))
-        cv2.imshow("Skeleton", skeleton)
+        cv2.imshow("Skeleton", cv2.bitwise_not(skeleton))
         cv2.waitKey()
 
         print("\n\n")
