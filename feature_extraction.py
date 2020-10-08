@@ -73,7 +73,7 @@ for folder in os.listdir(db_path):
 
         # Get length of skeleton
         # Install library opencv-contrib-python to use this!
-        skeleton = cv2.ximgproc.thinning(image, thinningType=0)
+        skeleton = cv2.ximgproc.thinning(image, thinningType=1)
         skeleton_length = cv2.countNonZero(skeleton)
         print("Length of skeleton: " + str(skeleton_length))
         cv2.imshow("Skeleton", cv2.bitwise_not(skeleton))
