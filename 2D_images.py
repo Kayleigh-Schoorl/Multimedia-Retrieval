@@ -61,6 +61,8 @@ for filename in os.listdir(db_path):
 
 
 rendered_images_path = os.path.join(curr_directory, "images", "renders")
+
+
 for folder in os.listdir(rendered_images_path):
     if folder.startswith("."):
         continue
