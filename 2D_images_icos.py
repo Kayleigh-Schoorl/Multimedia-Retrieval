@@ -74,6 +74,7 @@ for filename in os.listdir(db_path):
     mesh = trimesh.load(mesh_path)
 
     scene = mesh.scene()
+    scene.camera.fov = [70., 70.]
 
     #top photo
     try:
@@ -146,7 +147,8 @@ for filename in os.listdir(db_path):
     #bottom photo
     try:
         file_name = os.path.join(curr_directory, "images", "renders", mesh_name,
-                                 mesh_name + '_' + "7bottom" + '_render' + '.png')
+                                 mesh_name + '_' + "7" + '_render' + '.png')
+
         # save a render of the object as a png
         png = scene.save_image(resolution=[600, 400], visible=True)
 
