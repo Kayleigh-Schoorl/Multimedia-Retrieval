@@ -2,6 +2,7 @@ import trimesh
 import numpy as np
 import os
 import math
+import cv2
 
 
 curr_directory = os.getcwd()
@@ -74,7 +75,7 @@ for filename in os.listdir(db_path):
     mesh = trimesh.load(mesh_path)
 
     scene = mesh.scene()
-    scene.camera.fov = [70., 70.]
+    scene.camera.fov = [70., 80.]
 
     #top photo
     try:
@@ -205,3 +206,21 @@ for filename in os.listdir(db_path):
 
 
 rendered_images_path = os.path.join(curr_directory, "images", "renders")
+
+for folder in os.listdir(rendered_images_path):
+    if folder.startswith("."):
+        continue
+    for filename in os.listdir(os.path.join(rendered_images_path, folder)):
+
+        extension = os.path.splitext(filename)[1]
+        mesh_name = os.path.splitext(filename)[0]
+
+        if extension != ".png":
+            continue
+
+        if not os.path.exists(os.path.join(curr_directory, "images", "bw", folder)):
+            os.makedirs(os.path.join(curr_directory, "images", "bw", folder))
+
+        image = cv2.imread(os.path.join(curr_directory, "images", "renders", folder, mesh_name+'.png'))
+        (thresh, blackAndWhiteImage) = cv2.threshold(image, 254, 255, cv2.THRESH_BINARY)
+        cv2.imwrite(os.path.join(curr_directory, "images", "bw", folder, mesh_name+'_bw' + '.png'),blackAndWhiteImage)
