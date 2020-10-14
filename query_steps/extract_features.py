@@ -1,0 +1,79 @@
+import cv2
+import numpy as np
+import os
+import math
+
+def extract(mesh):
+    curr_directory = os.getcwd()
+    for filename in os.listdir(os.path.join(curr_directory, "renders")):
+        if filename.startswith("."):
+            continue
+
+        extension = os.path.splitext(filename)[1]
+        mesh_name = os.path.splitext(filename)[0]
+
+        if extension != ".png":
+            continue
+
+        image = cv2.imread(os.path.join(curr_directory, "renders", filename))
+        (thresh, image) = cv2.threshold(image, 254, 255, cv2.THRESH_BINARY)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+
+        # Get area 
+        area = cv2.countNonZero(image)
+        print("Area: " + str(area))
+
+        # Get perimeter (total for all contours)
+        contours, hierarchy = cv2.findContours(image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        perimeter = 0
+        for contour in contours:
+            perimeter += int(cv2.arcLength(contour,True))
+        print("Perimeter: " + str(perimeter))
+
+        # Compute compactness
+        area_2 = cv2.contourArea(contours[0])
+        compactness = (perimeter ** 2) / (4 * math.pi * area_2)
+        print("Compactness: " + str(compactness))
+
+        # Compute circularity
+        circularity = 1 / compactness
+        print("Circularity: " + str(circularity))
+
+        # Compute centroid
+        M = cv2.moments(contours[0])
+        cX = int(M["m10"] / M["m00"])
+        cY = int(M["m01"] / M["m00"])
+        print("Centroid: (" + str(cX) + ", " + str(cY) + ")")
+
+        # Get axis-aligned bounding box
+        x,y,w,h = cv2.boundingRect(contours[0])
+        print("\nAxis-aligned bounding box:")
+        print("Top-left coordinate: (" + str(x) + ", " + str(y) + ")")
+        print("Width: " + str(w))
+        print("Height: " + str(h) + "\n")
+
+        # Compute rectangularity (using object oriented bounding box)
+        rect = cv2.minAreaRect(contours[0])
+        rectangularity = area_2 / (rect[1][0] * rect[1][1])
+        print("Rectangularity: " + str(rectangularity))
+
+        # Get diameter
+        _,radius = cv2.minEnclosingCircle(contours[0])
+        diameter_1 = radius*2
+        print("Diameter: " + str(diameter_1))
+
+        # Compute eccentricity
+        _,(MA,ma),angle = cv2.fitEllipse(contours[0])
+        eccentricity = MA / ma
+        print("Eccentricity: " + str(eccentricity))
+
+        # Get length of skeleton
+        # Install library opencv-contrib-python to use this!
+        skeleton = cv2.ximgproc.thinning(image, thinningType=1)
+        skeleton_length = cv2.countNonZero(skeleton)
+        print("Length of skeleton: " + str(skeleton_length))
+        cv2.imshow("Skeleton", cv2.bitwise_not(skeleton))
+        cv2.waitKey()
+
+        print("\n\n")
