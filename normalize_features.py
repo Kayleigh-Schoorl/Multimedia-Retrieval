@@ -35,12 +35,17 @@ for feature in feature_data:
     average.append(statistics.mean(feature))
     stdev.append(statistics.stdev(feature))
 
-for mesh in data.items():
+normalized_data = {}
+for image in data.items():
     for i in range(len(features)):
-        normalized_value = (mesh[1].get(features[i]) - average[i]) / stdev[i]
-        mesh[1][features[i]] = normalized_value
-    data[mesh[0]] = mesh
+        normalized_value = (image[1].get(features[i]) - average[i]) / stdev[i]
+        image[1][features[i]] = normalized_value
+    mesh = image[0].split("_")
+    mesh_name = mesh[0] + "_" + mesh[1]
+    if mesh_name not in normalized_data:
+        normalized_data[mesh_name] = {}
+    normalized_data[mesh_name][mesh[2]] = image[1]
 
 with open(os.path.join(curr_directory, 'normalized_features.json'), 'w') as f:
-    json.dump(data, f, sort_keys=True)
+    json.dump(normalized_data, f, sort_keys=True)
 
