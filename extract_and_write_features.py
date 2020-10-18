@@ -17,8 +17,8 @@ for folder in os.listdir(db_path):
 
     for filename in os.listdir(os.path.join(db_path, folder)):
 
-        if "_1_" not in filename:
-            continue
+        # if "_1_" not in filename:
+        #     continue
 
         features = {}
 
