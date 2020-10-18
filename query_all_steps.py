@@ -5,6 +5,7 @@ import argparse
 from query_steps import normalization
 from query_steps import render_2D_images
 from query_steps import extract_features
+from query_steps import calculate_distances
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-M", "--mesh", help="input mesh")
@@ -27,4 +28,4 @@ mesh = trimesh.load(args.mesh)
 normalized_mesh = normalization.normalize(mesh, args.mesh)
 render_2D_images.generate(normalized_mesh)
 data = extract_features.extract(mesh)
-print(data)
+calculate_distances.distance(data)
