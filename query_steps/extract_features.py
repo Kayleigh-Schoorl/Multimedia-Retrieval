@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import os
 import math
+import json
 
 def extract(mesh):
     curr_directory = os.getcwd()
@@ -84,6 +85,18 @@ def extract(mesh):
         skeleton_length = cv2.countNonZero(skeleton)
         features["skeleton_length"] = skeleton_length
 
+        # Normalization
+        with open(os.path.join(curr_directory, 'averages.json'), 'r') as f:
+            averages = json.load(f)
+        with open(os.path.join(curr_directory, 'stdevs.json'), 'r') as f:
+            stdevs = json.load(f)
+
+        normalized_features = {}
+
+        for feature in features:
+            normalized_features[feature] = (features.get(feature) - averages.get(feature)) / stdevs.get(feature)
+        
         number = mesh_name.split("_")[1]
-        data[number] = features
+        data[number] = normalized_features
+
     return data

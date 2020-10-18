@@ -6,7 +6,7 @@ curr_directory = os.getcwd()
 with open(os.path.join(curr_directory, 'features.json'), 'r') as f:
     data = json.load(f)
 
-feature_data = []
+feature_data = {}
 features = ["area",
             "perimeter",
             "compactness",
@@ -22,24 +22,29 @@ features = ["area",
             "eccentricity",
             "skeleton_length"]
 
-for feature in features:
-    feature_data.append([])
-
 for mesh in data.items():
-    for i in range(len(features)):
-        feature_data[i].append(mesh[1].get(features[i]))
+    for feature in features:
+        if feature not in feature_data:
+            feature_data[feature] = [mesh[1].get(feature)]
+        else:
+            feature_data[feature].append(mesh[1].get(feature))
 
-average = []
-stdev = []
-for feature in feature_data:
-    average.append(statistics.mean(feature))
-    stdev.append(statistics.stdev(feature))
+average = {}
+stdev = {}
+for feature in features:
+    average[feature] = statistics.mean(feature_data.get(feature))
+    stdev[feature] = statistics.stdev(feature_data.get(feature))
+
+with open(os.path.join(curr_directory, 'averages.json'), 'w') as f:
+    json.dump(average, f, sort_keys=True)
+with open(os.path.join(curr_directory, 'stdevs.json'), 'w') as f:
+    json.dump(stdev, f, sort_keys=True)
 
 normalized_data = {}
 for image in data.items():
-    for i in range(len(features)):
-        normalized_value = (image[1].get(features[i]) - average[i]) / stdev[i]
-        image[1][features[i]] = normalized_value
+    for feature in features:
+        normalized_value = (image[1].get(feature) - average.get(feature)) / stdev.get(feature)
+        image[1][feature] = normalized_value
     mesh = image[0].split("_")
     mesh_name = mesh[0] + "_" + mesh[1]
     if mesh_name not in normalized_data:
