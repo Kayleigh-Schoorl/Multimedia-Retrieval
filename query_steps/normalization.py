@@ -6,6 +6,12 @@ import meshlabxml as mlx
 import math 
 import cv2
 
+meshlabserver_path = 'C:\\Program Files\\VCG\\MeshLab'
+# os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
+
+#meshlabserver_path = '/Applications/meshlab.app/Contents/MacOS'
+os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
+
 
 # Code for writing a MeshLab script for scaling by 3DLIRIOUS
 # https://github.com/3DLIRIOUS/MeshLabXML

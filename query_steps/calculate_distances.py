@@ -41,5 +41,6 @@ def distance(query_data):
         counter+=1
 
     minpos = distances.index(min(distances))
-    print(distances)
-    print("closest match is shape number  "+str(image_index[minpos])  +"  with a distance of  "+str(distances[minpos]))
+    #print(image_index)
+
+    print("closest match is shape number  "+str(image_index[minpos]+1)+" :  "+ list(data.keys())[image_index[minpos]] +"  with a distance of  "+str(distances[minpos]))
