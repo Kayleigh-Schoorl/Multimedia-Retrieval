@@ -26,4 +26,5 @@ if extension != ".ply" and extension != ".off":
 mesh = trimesh.load(args.mesh)
 normalized_mesh = normalization.normalize(mesh, args.mesh)
 render_2D_images.generate(normalized_mesh)
-extract_features.extract(mesh)
+data = extract_features.extract(mesh)
+print(data)
