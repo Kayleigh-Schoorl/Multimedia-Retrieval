@@ -50,6 +50,7 @@ features = ["area",
 
 test_count = 0
 correct_count = 0
+class_count = {}
 
 for query_shape in query_set:
     distances=[]
@@ -77,12 +78,19 @@ for query_shape in query_set:
     distances, image_index = (list(t) for t in zip(*sorted(zip(distances, image_index))))
 
     query_shape_class = query_shape.split("_")[0]
+    if query_shape_class not in class_count:
+        class_count[query_shape_class] = [5,0]
+    else:
+        class_count[query_shape_class][0] += 5
     for i in range(5):
         found_shape = list(database_set.keys())[image_index[i]]
         found_shape_class = found_shape.split("_")[0]
         print("Original shape is is " + query_shape + ", found shape is " + found_shape)
         if query_shape_class == found_shape_class:
             correct_count += 1
+            class_count[query_shape_class][1] += 1
         test_count += 1
 
-print("Accuracy: " + str(correct_count / test_count * 100) + "%")
+for class_acc in class_count:
+    print("Accuracy for class " + class_acc + ": " + str(class_count.get(class_acc)[1] / class_count.get(class_acc)[0] * 100) + "%")
+print("Overall accuracy: " + str(correct_count / test_count * 100) + "%")
