@@ -1,0 +1,88 @@
+import os
+import json
+import math
+import random
+
+os.chdir("..")
+curr_directory=os.getcwd()
+
+with open(os.path.join(curr_directory, 'normalized_features.json'), 'r') as f:
+    dataset = json.load(f)
+
+dataset_classes = {}
+for shape in dataset:
+    class_name = shape.split("_")[0]
+    if class_name not in dataset_classes:
+        dataset_classes[class_name] = {shape: dataset.get(shape)}
+    else:
+        dataset_classes.get(class_name)[shape] = dataset.get(shape)
+
+query_set = {}
+database_set = {}
+for shape_class in dataset_classes:
+    class_shapes = dataset_classes.get(shape_class)
+    keys = list(class_shapes.keys())      # Python 3; use keys = d.keys() in Python 2
+    random.shuffle(keys)
+    split_value = int(len(keys) / 4)
+    query_shapes = keys[:split_value]
+    database_shapes = keys[split_value:]
+    for shape in query_shapes:
+        query_set[shape] = class_shapes.get(shape)
+    for shape in database_shapes:
+        database_set[shape] = class_shapes.get(shape)
+
+
+features = ["area",
+            "perimeter",
+            "compactness",
+            "circularity",
+            "centroid_x",
+            "centroid_y",
+            "bounding_box_x",
+            "bounding_box_y",
+            "bounding_box_w",
+            "bounding_box_h",
+            "rectangularity",
+            "diameter",
+            "eccentricity",
+            "skeleton_length"]
+
+
+test_count = 0
+correct_count = 0
+
+for query_shape in query_set:
+    distances=[]
+    image_index=[]
+    counter=0
+    cnt=0
+
+    for shape in database_set.items():
+        total_distance = 0
+        for query_image in query_set.get(query_shape).items():
+            min_distance = math.inf 
+            for image in shape[1]:
+                distance = 0
+                for feature in features:
+                    distance+=math.sqrt(abs((shape[1][str(image)][feature])**2 - (query_image[1][feature])**2))
+                if distance < min_distance:
+                    min_distance = distance
+                cnt+=1
+            total_distance += min_distance
+        distances.append(total_distance)
+        image_index.append(counter)
+        cnt=0
+        counter+=1
+
+    distances, image_index = (list(t) for t in zip(*sorted(zip(distances, image_index))))
+
+    query_shape_class = query_shape.split("_")[0]
+    for i in range(5):
+        found_shape = list(database_set.keys())[image_index[i]]
+        found_shape_class = found_shape.split("_")[0]
+        print("Original shape is is " + query_shape + ", found shape is " + found_shape)
+        if query_shape_class == found_shape_class:
+            correct_count += 1
+        test_count += 1
+
+print("Accuracy: " + str(correct_count / test_count * 100) + "%")
