@@ -23,27 +23,27 @@ def distance(query_data):
                 "diameter",
                 "eccentricity",
                 "skeleton_length"]
-    distance=0
     distances=[]
     image_index=[]
     counter=0
     cnt=0
 
     for shape in data.items():
-        for image in shape[1]:
-            for query_image in query_data.items():
+        total_distance = 0
+        for query_image in query_data.items():
+            min_distance = math.inf 
+            for image in shape[1]:
+                distance = 0
                 for feature in features:
                     distance+=math.sqrt(abs((shape[1][str(image)][feature])**2 - (query_image[1][feature])**2))
+                if distance < min_distance:
+                    min_distance = distance
                 cnt+=1
-        distance=distance/cnt
-        distances.append(distance)
+            total_distance += min_distance
+        distances.append(total_distance)
         image_index.append(counter)
-        distance = 0
         cnt=0
         counter+=1
 
     distances, image_index = (list(t) for t in zip(*sorted(zip(distances, image_index))))
-    #minpos = distances.index(min(distances))
-    print(image_index)
-    print(distances)
     print("closest 3 matching shapes are:  "+ list(data.keys())[image_index[0]] +"   "+ list(data.keys())[image_index[1]]+"   "+ list(data.keys())[image_index[2]])
