@@ -47,6 +47,8 @@ features = ["area",
             "eccentricity",
             "skeleton_length"]
 
+weights = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
 
 test_count = 0
 correct_count = 0
@@ -60,20 +62,23 @@ for query_shape in query_set:
 
     for shape in database_set.items():
         total_distance = 0
+
         for query_image in query_set.get(query_shape).items():
             min_distance = math.inf 
             for image in shape[1]:
                 distance = 0
-                for feature in features:
-                    distance+=math.sqrt(abs((shape[1][str(image)][feature])**2 - (query_image[1][feature])**2))
+                for i in range(len(features)):
+                    distance += float(weights[i]) * math.sqrt(abs((shape[1][str(image)][features[i]])**2 - (query_image[1][features[i]])**2))
                 if distance < min_distance:
                     min_distance = distance
                 cnt+=1
             total_distance += min_distance
+
         distances.append(total_distance)
         image_index.append(counter)
         cnt=0
         counter+=1
+        
 
     distances, image_index = (list(t) for t in zip(*sorted(zip(distances, image_index))))
 
