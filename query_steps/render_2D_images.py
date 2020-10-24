@@ -4,6 +4,9 @@ import os
 
 
 def generate(mesh):
+
+    visible = True
+
     curr_directory = os.getcwd()
     ANGLE72 = math.radians(72)
     ANGLE36 = math.radians(36)
@@ -49,7 +52,7 @@ def generate(mesh):
         file_name = os.path.join(curr_directory, "renders",
                                     mesh_name + '_' + "1" + '_render' + '.png')
         # save a render of the object as a png
-        png = scene.save_image(resolution=[600, 400], visible=True)
+        png = scene.save_image(resolution=[600, 400], visible=visible)
 
         with open(file_name, 'wb') as f:
             f.write(png)
@@ -65,7 +68,7 @@ def generate(mesh):
         file_name = os.path.join(curr_directory, "renders",
                                     mesh_name + '_' + "2" + '_render' + '.png')
         # save a render of the object as a png
-        png = scene.save_image(resolution=[600, 400], visible=True)
+        png = scene.save_image(resolution=[600, 400], visible=visible)
 
         with open(file_name, 'wb') as f:
             f.write(png)
@@ -88,7 +91,7 @@ def generate(mesh):
             file_name = os.path.join(curr_directory, "renders",
                                         mesh_name + '_' + str(i)+ '_render' + '.png')
             # save a render of the object as a png
-            png = scene.save_image(resolution=[600, 400], visible=True)
+            png = scene.save_image(resolution=[600, 400], visible=visible)
 
             with open(file_name, 'wb') as f:
                 f.write(png)
@@ -115,7 +118,7 @@ def generate(mesh):
                                     mesh_name + '_' + "7" + '_render' + '.png')
 
         # save a render of the object as a png
-        png = scene.save_image(resolution=[600, 400], visible=True)
+        png = scene.save_image(resolution=[600, 400], visible=visible)
 
         with open(file_name, 'wb') as f:
             f.write(png)
@@ -133,7 +136,7 @@ def generate(mesh):
         file_name = os.path.join(curr_directory, "renders",
                                     mesh_name + '_' + "8" + '_render' + '.png')
         # save a render of the object as a png
-        png = scene.save_image(resolution=[600, 400], visible=True)
+        png = scene.save_image(resolution=[600, 400], visible=visible)
 
         with open(file_name, 'wb') as f:
             f.write(png)
@@ -157,7 +160,7 @@ def generate(mesh):
             file_name = os.path.join(curr_directory, "renders",
                                         mesh_name + '_' +str(i)+ '_render' + '.png')
             # save a render of the object as a png
-            png = scene.save_image(resolution=[600, 400], visible=True)
+            png = scene.save_image(resolution=[600, 400], visible=visible)
 
             with open(file_name, 'wb') as f:
                 f.write(png)

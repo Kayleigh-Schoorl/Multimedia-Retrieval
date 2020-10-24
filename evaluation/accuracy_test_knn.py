@@ -63,7 +63,7 @@ def distance_computation(v1, v2):
 
     total_distance = 0
     for query_image in v1_images:
-        min_distance = 1000000 
+        min_distance = math.inf 
         for image in v2_images:
             distance = 0
             for i in range(no_features):
@@ -74,7 +74,7 @@ def distance_computation(v1, v2):
         total_distance += min_distance
 
     for image in v2_images:
-        min_distance = 1000000 
+        min_distance = math.inf 
         for query_image in v1_images:
             distance = 0
             for i in range(no_features):
