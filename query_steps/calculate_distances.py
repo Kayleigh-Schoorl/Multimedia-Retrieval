@@ -66,6 +66,11 @@ def distance(query_data):
 
     neighbors = index.query(np.array([query_features]), k=5)[0][0]
     count = 1
+    neighbor_names = []
     for neighbor in neighbors:
         found_shape_name = dataset_names[neighbor]
+        neighbor_names.append(found_shape_name)
         print("Found shape number " + str(count) + " is: " + found_shape_name)
+        count += 1
+
+    return neighbor_names
