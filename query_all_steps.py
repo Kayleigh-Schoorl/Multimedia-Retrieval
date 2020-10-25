@@ -42,45 +42,25 @@ found_shapes = calculate_distances.distance(data)
 curr_directory = os.getcwd()
 db_path = os.path.join(curr_directory, "LabeledDB_new")
 
-original_mesh = pv.read(args.mesh)
-
-mesh_class1 = found_shapes[0].split("_")[0]
-mesh_name1 = found_shapes[0].split("_")[1] + ".off"
-mesh1 = pv.read(os.path.join(db_path, mesh_class1, mesh_name1))
-
-mesh_class2 = found_shapes[1].split("_")[0]
-mesh_name2 = found_shapes[1].split("_")[1] + ".off"
-mesh2 = pv.read(os.path.join(db_path, mesh_class2, mesh_name2))
-
-mesh_class3 = found_shapes[2].split("_")[0]
-mesh_name3 = found_shapes[2].split("_")[1] + ".off"
-mesh3 = pv.read(os.path.join(db_path, mesh_class3, mesh_name3))
-
-mesh_class4 = found_shapes[3].split("_")[0]
-mesh_name4 = found_shapes[3].split("_")[1] + ".off"
-mesh4 = pv.read(os.path.join(db_path, mesh_class4, mesh_name4))
-
-mesh_class5 = found_shapes[4].split("_")[0]
-mesh_name5 = found_shapes[4].split("_")[1] + ".off"
-mesh5 = pv.read(os.path.join(db_path, mesh_class5, mesh_name5))
-
 p = pv.Plotter(shape=(2, 3))
+p.background_color="white"
+
+original_mesh = pv.read(args.mesh)
 p.subplot(0, 0)
-p.add_text('Original shape')
-p.add_mesh(original_mesh, color="red")
-p.subplot(0, 1)
-p.add_text('Found shape 1')
-p.add_mesh(mesh1, color="orange")
-p.subplot(0, 2)
-p.add_text('Found shape 2')
-p.add_mesh(mesh2, color="yellow")
-p.subplot(1, 0)
-p.add_text('Found shape 3')
-p.add_mesh(mesh3, color="green")
-p.subplot(1, 1)
-p.add_text('Found shape 4')
-p.add_mesh(mesh4, color="blue")
-p.subplot(1, 2)
-p.add_text('Found shape 5')
-p.add_mesh(mesh5, color="purple")
+p.add_text("Original shape", color="black")
+p.add_mesh(original_mesh, color="grey")
+
+subplots = [(0,1),(0,2),(1,0),(1,1),(1,2)]
+count = 1
+
+for i in range(len(found_shapes)):
+    shape = found_shapes[i]
+    mesh_class1 = found_shapes[i].split("_")[0]
+    mesh_name1 = found_shapes[i].split("_")[1] + ".off"
+    mesh = pv.read(os.path.join(db_path, mesh_class1, mesh_name1))
+    p.subplot(subplots[i][0],subplots[i][1])
+    p.add_text("Found shape #" + str(count), color="black")
+    p.add_mesh(mesh, color="pink")
+    count += 1
+
 p.show()
