@@ -57,4 +57,5 @@ for shape_name in data:
     dataset_names.append(shape_name)
 
 index = NNDescent(np.array(dataset), metric=distance_computation)
+index.prepare()
 pickle.dump( index, open( "ann_model.p", "wb" ) )
