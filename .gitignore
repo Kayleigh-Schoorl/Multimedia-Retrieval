@@ -17,3 +17,6 @@ TEMP3D_aabb.xyz
 tempfile.ply
 .idea/workspace.xml
 TEMP3D_aabb.xyz
+curvature_test.py
+mnist2500_labels.txt
+mnist2500_X.txt
