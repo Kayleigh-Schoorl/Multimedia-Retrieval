@@ -9,17 +9,29 @@ import pickle
 def distance(query_data):
 
     curr_directory = os.getcwd()
-    with open(os.path.join(curr_directory, 'normalized_features.json'), 'r') as f:
-        data = json.load(f)
+    dataset_names = pickle.load( open( os.path.join(curr_directory, "dataset_names.p"), "rb" ) )
 
-    dataset_names = []
-    for shape_name in data:
-        dataset_names.append(shape_name)
+    features = ["area",
+                "perimeter",
+                "compactness",
+                "circularity",
+                "centroid_x",
+                "centroid_y",
+                "bounding_box_x",
+                "bounding_box_y",
+                "bounding_box_w",
+                "bounding_box_h",
+                "rectangularity",
+                "diameter",
+                "eccentricity",
+                "skeleton_length"]
+
+    features.sort()
 
     query_features = []
     for image in query_data:
         image_features = query_data.get(image)
-        for feature in image_features:
+        for feature in features:
             query_features.append(image_features.get(feature))
 
     index = pickle.load( open( os.path.join(curr_directory, "ann_model.p"), "rb" ) )
