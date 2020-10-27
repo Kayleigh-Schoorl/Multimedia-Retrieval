@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f6fd1ab-bb0d-446f-b639-122f2b403891" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TEMP3D_aabb.xyz" beforeDir="false" afterPath="$PROJECT_DIR$/TEMP3D_aabb.xyz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bonus_dr.py" beforeDir="false" afterPath="$PROJECT_DIR$/bonus_dr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsne.py" beforeDir="false" afterPath="$PROJECT_DIR$/tsne.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,10 +29,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tsne.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.query_all_steps">
+  <component name="RunManager" selected="Python.bonus_dr">
     <configuration name="1_subdivide_meshes" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="Multimedia-Retrieval" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -317,7 +319,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/query_all_steps.py" />
-      <option name="PARAMETERS" value="-M C:\Users\trekk\Documents\GitHub\Multimedia-Retrieval\meshes\converted\Human_2.ply" />
+      <option name="PARAMETERS" value="-M C:\Users\trekk\Documents\GitHub\Multimedia-Retrieval\meshes\converted\Fish_222.ply" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -367,6 +369,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="tsne" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Multimedia-Retrieval" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\trekk\AppData\Local\Programs\Python\Python38\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tsne.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.1_subdivide_meshes" />
       <item itemvalue="Python.2D_images_icos" />
@@ -380,6 +403,7 @@
       <item itemvalue="Python.feature_extraction" />
       <item itemvalue="Python.graph" />
       <item itemvalue="Python.normalize_features" />
+      <item itemvalue="Python.tsne" />
       <item itemvalue="Python.query_all_steps" />
       <item itemvalue="Python.scene_test" />
       <item itemvalue="Python.test_extraction" />
@@ -397,30 +421,46 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="278" y="0" width="1089" height="824" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603657154492">
+    <state x="278" y="0" width="1089" height="824" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603800235883">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="278" y="0" width="1089" height="824" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1603657154492" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1603479040895">
+    <state x="278" y="0" width="1089" height="824" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1603800235883" />
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1603800234741">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1603479040895" />
-    <state width="1515" height="211" key="GridCell.Tab.0.bottom" timestamp="1603657350748">
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1603800234741" />
+    <state width="1515" height="211" key="GridCell.Tab.0.bottom" timestamp="1603820524208">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="211" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603657350748" />
-    <state width="1515" height="211" key="GridCell.Tab.0.center" timestamp="1603657350747">
+    <state width="1515" height="211" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603820524208" />
+    <state width="1515" height="211" key="GridCell.Tab.0.center" timestamp="1603820524208">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="211" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603657350747" />
-    <state width="1515" height="211" key="GridCell.Tab.0.left" timestamp="1603657350747">
+    <state width="1515" height="211" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603820524208" />
+    <state width="1515" height="211" key="GridCell.Tab.0.left" timestamp="1603820524208">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="211" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603657350747" />
-    <state width="1515" height="211" key="GridCell.Tab.0.right" timestamp="1603657350747">
+    <state width="1515" height="211" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603820524208" />
+    <state width="1515" height="211" key="GridCell.Tab.0.right" timestamp="1603820524208">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="211" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603657350747" />
+    <state width="1515" height="211" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603820524208" />
+    <state width="1515" height="261" key="GridCell.Tab.1.bottom" timestamp="1603809693837">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603809693837" />
+    <state width="1515" height="261" key="GridCell.Tab.1.center" timestamp="1603809693836">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1603809693836" />
+    <state width="1515" height="261" key="GridCell.Tab.1.left" timestamp="1603809693836">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1603809693836" />
+    <state width="1515" height="261" key="GridCell.Tab.1.right" timestamp="1603809693836">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1603809693836" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1603402710090">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
