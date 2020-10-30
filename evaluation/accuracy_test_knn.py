@@ -40,20 +40,22 @@ def evaluate_knn():
     correct_count = 0
     class_count = {}
 
+    k = 5
     index = pickle.load( open( os.path.join(curr_directory, "ann_model.p"), "rb" ) )
-    neighbors = index.query(np.array(dataset), k=6, )[0]
+    neighbors = index.query(np.array(dataset), k=k+1, )[0]
 
     for i in range(len(neighbors)):
         name = dataset_names[i]
         correct_class = name.split("_")[0]
         if correct_class not in class_count:
-            class_count[correct_class] = [5,0]
+            class_count[correct_class] = [k,0,1]
         else:
-            class_count[correct_class][0] += 5
+            class_count[correct_class][0] += k
+            class_count[correct_class][2] += 1
             
         count = 0
         for found_shape in neighbors[i]:
-            if count >= 5:
+            if count >= k:
                 continue
 
             found_shape_name = dataset_names[found_shape]
@@ -69,9 +71,20 @@ def evaluate_knn():
                 class_count[correct_class][1] += 1
             test_count += 1
 
+    all_recall = []
     for class_acc in class_count:
-        print("Accuracy for class " + class_acc + ": " + str(class_count.get(class_acc)[1] / class_count.get(class_acc)[0] * 100) + "%")
-    print("Overall accuracy: " + str(correct_count / test_count * 100) + "%")
+        precision = class_count.get(class_acc)[1] / class_count.get(class_acc)[0]
+        print("Precision for class " + class_acc + ": " + str(precision))
+        recall = class_count.get(class_acc)[1] / (class_count.get(class_acc)[2])**2
+        print("Recall for class " + class_acc + ": " + str(recall))
+        all_recall.append(recall)
+        print("F1 score for class " + class_acc + ": " + str(2 * (recall * precision / (recall + precision))) + "\n")
+    
+    overall_precision = correct_count / test_count
+    print("Overall precision: " + str(overall_precision))
+    overall_recall = sum(all_recall) / len(class_count)
+    print("Overall recall: " + str(overall_recall))
+    print("Overall F1 score: " + str(2 * (overall_recall * overall_precision / (overall_precision + overall_recall))))
 
 
 if __name__ == "__main__":
