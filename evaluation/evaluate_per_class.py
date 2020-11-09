@@ -40,7 +40,7 @@ def evaluate_knn():
     correct_count = 0
     class_count = {}
 
-    k = 5
+    k = 8
     index = pickle.load( open( os.path.join(curr_directory, "ann_model.p"), "rb" ) )
     neighbors = index.query(np.array(dataset), k=k+1, )[0]
 
@@ -72,7 +72,12 @@ def evaluate_knn():
             test_count += 1
 
     all_recall = []
+    all_accuracy = []
     for class_acc in class_count:
+        no_in_class = class_count.get(class_acc)[2]
+        accuracy = (class_count.get(class_acc)[1] + ((len(data)-1)*no_in_class - (no_in_class-1)**2 - (k*(no_in_class-1) - class_count[correct_class][1]))) / ((len(data)-1)*no_in_class)
+        print("Accuracy for class " + class_acc + ": " + str(accuracy))
+        all_accuracy.append(accuracy)
         precision = class_count.get(class_acc)[1] / class_count.get(class_acc)[0]
         print("Precision for class " + class_acc + ": " + str(precision))
         recall = class_count.get(class_acc)[1] / (class_count.get(class_acc)[2])**2
@@ -80,6 +85,9 @@ def evaluate_knn():
         all_recall.append(recall)
         print("F1 score for class " + class_acc + ": " + str(2 * (recall * precision / (recall + precision))) + "\n")
     
+
+    overall_accuracy = sum(all_accuracy) / len(class_count)
+    print("Overall accuracy: " + str(overall_accuracy))
     overall_precision = correct_count / test_count
     print("Overall precision: " + str(overall_precision))
     overall_recall = sum(all_recall) / len(class_count)

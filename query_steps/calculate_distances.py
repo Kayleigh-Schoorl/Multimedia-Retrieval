@@ -31,6 +31,8 @@ def distance_exact(query_data):
             "eccentricity",
             "skeleton_length"]
 
+    weights = [0.2,0.01,0.01,0.01,0.01,0.01,0.01,1,0.8,0.01,0.05,0.5,0.4,1]
+
     for shape in dataset:
         total_distance = 0
 
@@ -39,7 +41,7 @@ def distance_exact(query_data):
             for image in dataset.get(shape).values():
                 distance = 0
                 for i in range(len(features)):
-                    distance += (image.get(features[i]) - query_image.get(features[i]))**2
+                    distance += float(weights[i]) * (image.get(features[i]) - query_image.get(features[i]))**2
                 distance = math.sqrt(distance)
                 if distance < min_distance:
                     min_distance = distance
@@ -50,7 +52,7 @@ def distance_exact(query_data):
             for query_image in query_data.values():
                 distance = 0
                 for i in range(len(features)):
-                    distance += (image.get(features[i]) - query_image.get(features[i]))**2
+                    distance += float(weights[i]) * (image.get(features[i]) - query_image.get(features[i]))**2
                 distance = math.sqrt(distance)
                 if distance < min_distance:
                     min_distance = distance
@@ -64,7 +66,7 @@ def distance_exact(query_data):
 
     neighbor_names = []
     count = 1
-    for i in range(5):
+    for i in range(8):
         found_shape = list(dataset.keys())[image_index[i]]
         neighbor_names.append(found_shape)
         print("Found shape number " + str(count) + " is: " + found_shape)
@@ -100,7 +102,7 @@ def distance_ann(query_data):
             query_features.append(image_features.get(feature))
 
     index = pickle.load( open( os.path.join(curr_directory, "ann_model.p"), "rb" ) )
-    neighbors = index.query(np.array([query_features]), k=5)[0][0]
+    neighbors = index.query(np.array([query_features]), k=8)[0][0]
 
     count = 1
     neighbor_names = []

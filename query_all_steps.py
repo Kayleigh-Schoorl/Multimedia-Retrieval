@@ -36,13 +36,13 @@ render_2D_images.generate(normalized_mesh)
 print("Performing feature extraction...")
 data = extract_features.extract(mesh)
 
-print("Finding 5 closest shapes in the database...")
-found_shapes = calculate_distances.distance(data)
+print("Finding 8 closest shapes in the database...")
+found_shapes = calculate_distances.distance(data, ann=True)
 
 curr_directory = os.getcwd()
 db_path = os.path.join(curr_directory, "LabeledDB_new")
 
-p = pv.Plotter(shape=(2, 3))
+p = pv.Plotter(shape=(3, 3))
 p.background_color="white"
 
 original_mesh = pv.read(args.mesh)
@@ -50,7 +50,7 @@ p.subplot(0, 0)
 p.add_text("Original shape", color="black")
 p.add_mesh(original_mesh, color="grey")
 
-subplots = [(0,1),(0,2),(1,0),(1,1),(1,2)]
+subplots = [(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)]
 count = 1
 
 for i in range(len(found_shapes)):
