@@ -5,12 +5,12 @@ import os
 import time
 import multiprocessing
 
+os.chdir("..")
 curr_directory = os.getcwd()
 
 db_path = os.path.join(curr_directory, "meshes", "flipped")
 
 directions = ["front", "side", "top"]
-
 
 for filename in os.listdir(db_path):
 

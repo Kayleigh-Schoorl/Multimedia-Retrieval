@@ -153,6 +153,11 @@ os.chdir("..")
 curr_directory = os.getcwd()
 db_path = os.path.join(curr_directory, "meshes", "simplified")
 
+if not os.path.exists(os.path.join(curr_directory, "meshes", "scaled")):
+    os.makedirs(os.path.join(curr_directory, "meshes", "scaled"))
+if not os.path.exists(os.path.join(curr_directory, "meshes", "normalized")):
+    os.makedirs(os.path.join(curr_directory, "meshes", "normalized"))
+
 distance_before=[]
 distance_after=[]
 

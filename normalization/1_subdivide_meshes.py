@@ -13,11 +13,14 @@ os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
 def has_hidden_attribute(filepath):
     return bool(os.stat(filepath).st_file_attributes & stat.FILE_ATTRIBUTE_HIDDEN)
 
-
 os.chdir("..")
 curr_directory = os.getcwd()
-print(curr_directory)
 db_path = os.path.join(curr_directory, "LabeledDB_new")
+
+if not os.path.exists(os.path.join(curr_directory, "meshes", "converted")):
+    os.makedirs(os.path.join(curr_directory, "meshes", "converted"))
+if not os.path.exists(os.path.join(curr_directory, "meshes", "simplified")):
+    os.makedirs(os.path.join(curr_directory, "meshes", "simplified"))
 
 for mesh_class in os.listdir(db_path):
 

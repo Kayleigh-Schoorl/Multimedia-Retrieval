@@ -6,6 +6,9 @@ os.chdir("..")
 curr_directory = os.getcwd()
 db_path = os.path.join(curr_directory, "meshes", "normalized")
 
+if not os.path.exists(os.path.join(curr_directory, "meshes", "aligned")):
+    os.makedirs(os.path.join(curr_directory, "meshes", "aligned"))
+
 for filename in os.listdir(db_path):
 
     extension = os.path.splitext(filename)[1]
