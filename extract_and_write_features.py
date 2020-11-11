@@ -92,6 +92,6 @@ for folder in os.listdir(db_path):
         print(name)
         data[name] = features
 
-with open(os.path.join(curr_directory, 'features.json'), 'w') as f:
+with open(os.path.join(curr_directory, 'config', 'features.json'), 'w') as f:
     json.dump(data, f, sort_keys=True)
 

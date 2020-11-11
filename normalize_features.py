@@ -3,7 +3,7 @@ import os
 import statistics 
 
 curr_directory = os.getcwd()
-with open(os.path.join(curr_directory, 'features.json'), 'r') as f:
+with open(os.path.join(curr_directory, 'config', 'features.json'), 'r') as f:
     data = json.load(f)
 
 feature_data = {}
@@ -35,9 +35,9 @@ for feature in features:
     average[feature] = statistics.mean(feature_data.get(feature))
     stdev[feature] = statistics.stdev(feature_data.get(feature))
 
-with open(os.path.join(curr_directory, 'averages.json'), 'w') as f:
+with open(os.path.join(curr_directory, 'config', 'averages.json'), 'w') as f:
     json.dump(average, f, sort_keys=True)
-with open(os.path.join(curr_directory, 'stdevs.json'), 'w') as f:
+with open(os.path.join(curr_directory, 'config', 'stdevs.json'), 'w') as f:
     json.dump(stdev, f, sort_keys=True)
 
 normalized_data = {}
@@ -51,6 +51,6 @@ for image in data.items():
         normalized_data[mesh_name] = {}
     normalized_data[mesh_name][mesh[2]] = image[1]
 
-with open(os.path.join(curr_directory, 'normalized_features.json'), 'w') as f:
+with open(os.path.join(curr_directory, 'config', 'normalized_features.json'), 'w') as f:
     json.dump(normalized_data, f, sort_keys=True)
 

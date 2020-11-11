@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 curr_directory=os.getcwd()
 
-with open(os.path.join(curr_directory, 'normalized_features.json'), 'r') as f:
+with open(os.path.join(curr_directory, 'config', 'normalized_features.json'), 'r') as f:
     data = json.load(f)
 
 feature=[]

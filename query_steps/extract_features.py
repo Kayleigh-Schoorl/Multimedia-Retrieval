@@ -86,9 +86,9 @@ def extract(mesh):
         features["skeleton_length"] = skeleton_length
 
         # Normalization
-        with open(os.path.join(curr_directory, 'averages.json'), 'r') as f:
+        with open(os.path.join(curr_directory, 'config', 'averages.json'), 'r') as f:
             averages = json.load(f)
-        with open(os.path.join(curr_directory, 'stdevs.json'), 'r') as f:
+        with open(os.path.join(curr_directory, 'config', 'stdevs.json'), 'r') as f:
             stdevs = json.load(f)
 
         normalized_features = {}

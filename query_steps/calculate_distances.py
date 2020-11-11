@@ -9,7 +9,7 @@ import pickle
 def distance_exact(query_data):
 
     curr_directory=os.getcwd()
-    with open(os.path.join(curr_directory, 'normalized_features.json'), 'r') as f:
+    with open(os.path.join(curr_directory, 'config', 'normalized_features.json'), 'r') as f:
         dataset = json.load(f)
 
     distances=[]
@@ -76,7 +76,7 @@ def distance_exact(query_data):
 def distance_ann(query_data):
 
     curr_directory = os.getcwd()
-    dataset_names = pickle.load( open( os.path.join(curr_directory, "dataset_names.p"), "rb" ) )
+    dataset_names = pickle.load( open( os.path.join(curr_directory, 'config', "dataset_names.p"), "rb" ) )
 
     features = ["area",
                 "perimeter",
@@ -101,7 +101,7 @@ def distance_ann(query_data):
         for feature in features:
             query_features.append(image_features.get(feature))
 
-    index = pickle.load( open( os.path.join(curr_directory, "ann_model.p"), "rb" ) )
+    index = pickle.load( open( os.path.join(curr_directory, 'config', "ann_model.p"), "rb" ) )
     neighbors = index.query(np.array([query_features]), k=8)[0][0]
 
     count = 1

@@ -59,7 +59,7 @@ def distance_computation(v1, v2):
 
 
 curr_directory=os.getcwd()
-with open(os.path.join(curr_directory, 'normalized_features.json'), 'r') as f:
+with open(os.path.join(curr_directory, 'config', 'normalized_features.json'), 'r') as f:
     data = json.load(f)
 
 dataset = []
@@ -76,6 +76,6 @@ for shape_name in data:
 
 index = NNDescent(np.array(dataset), metric=distance_computation)
 index.prepare()
-pickle.dump( index, open( "ann_model.p", "wb" ) )
+pickle.dump( index, open( os.path.join(curr_directory, 'config', 'ann_model.p'), "wb" ) )
 
-pickle.dump( dataset_names, open( "dataset_names.p", "wb" ) )
+pickle.dump( dataset_names, open( os.path.join(curr_directory, 'config', 'dataset_names.p'), "wb" ) )
