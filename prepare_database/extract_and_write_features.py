@@ -6,6 +6,7 @@ import math
 import time
 import json
 
+os.chdir("..")
 curr_directory = os.getcwd()
 db_path = os.path.join(curr_directory, "images", "bw")
 

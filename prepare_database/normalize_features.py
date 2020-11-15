@@ -2,6 +2,7 @@ import json
 import os
 import statistics 
 
+os.chdir("..")
 curr_directory = os.getcwd()
 with open(os.path.join(curr_directory, 'config', 'features.json'), 'r') as f:
     data = json.load(f)

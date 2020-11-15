@@ -150,6 +150,8 @@ def has_hidden_attribute(filepath):
 
 
 os.chdir("..")
+os.chdir("..")
+
 curr_directory = os.getcwd()
 db_path = os.path.join(curr_directory, "meshes", "simplified")
 
@@ -194,23 +196,5 @@ for filename in os.listdir(db_path):
 
         distance_before.append(abs(np.sqrt(center_before[0]**2+center_before[1]**2+center_before[2]**2)))
         distance_after.append(abs(np.sqrt(center_after[0]**2+center_after[1]**2+center_after[2]**2)))
-
-
-
-bins = np.array([-0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5])
-plt.hist(distance_before, bins=13, linewidth=1, edgecolor='black')
-plt.ticklabel_format(useOffset=False)
-plt.xlim(bins.min(), bins.max())
-plt.xlabel("Faces")
-plt.ylabel("3D shapes")
-plt.show()
-
-bins = np.array([-0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5])
-plt.hist(distance_after, bins=13, linewidth=1, edgecolor='black')
-plt.ticklabel_format(useOffset=False)
-plt.xlim(bins.min(), bins.max())
-plt.xlabel("Faces")
-plt.ylabel("3D shapes")
-plt.show()
 
 

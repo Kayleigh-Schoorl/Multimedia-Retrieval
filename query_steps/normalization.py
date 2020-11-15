@@ -236,4 +236,8 @@ def normalize(mesh, mesh_path):
     transformed = F.dot(np.transpose(mesh.vertices))
     mesh.vertices = np.transpose(transformed)
 
+    if os.path.exists(os.path.join(curr_directory, "tempfile.ply")):
+        os.remove(os.path.join(curr_directory, "tempfile.ply"))
+    if os.path.exists(os.path.join(curr_directory, "TEMP3D_aabb.xyz")):
+        os.remove(os.path.join(curr_directory, "TEMP3D_aabb.xyz"))
     return mesh

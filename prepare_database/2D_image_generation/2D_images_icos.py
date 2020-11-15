@@ -5,6 +5,8 @@ import math
 import cv2
 
 os.chdir("..")
+os.chdir("..")
+
 curr_directory = os.getcwd()
 
 ANGLE72 = math.radians(72)

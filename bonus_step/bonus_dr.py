@@ -4,6 +4,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+os.chdir("..")
 curr_directory=os.getcwd()
 
 with open(os.path.join(curr_directory, 'config', 'normalized_features.json'), 'r') as f:
@@ -41,7 +42,6 @@ for i in data.items():
     numbered_labels.append(i[0])
     labels.append(i[0].split("_")[0])
     shape.append(feature)
-    print(feature)
     feature=[]
 
 for i in range(len(labels)):
@@ -56,9 +56,6 @@ for i in range(len(labels)):
 shape=np.array(shape)
 
 X=tsne.tsne(shape,initial_dims=168)
-
-print(shape.shape)
-print(X.shape)
 
 fig,ax = plt.subplots()
 sc = plt.scatter(X[:, 0], X[:, 1], 20,colors)

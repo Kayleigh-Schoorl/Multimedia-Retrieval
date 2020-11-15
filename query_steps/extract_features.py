@@ -99,4 +99,8 @@ def extract(mesh):
         number = mesh_name.split("_")[1]
         data[number] = normalized_features
 
+    if os.path.exists(os.path.join(curr_directory, "renders")):
+        for filename in os.listdir(os.path.join(curr_directory, "renders")):
+            os.remove(os.path.join(curr_directory, "renders", filename))
+        os.rmdir(os.path.join(curr_directory, "renders"))
     return data
