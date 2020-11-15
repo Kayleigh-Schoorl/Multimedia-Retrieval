@@ -137,14 +137,6 @@ def scale_fixed(script, value=1.0, uniform=True, center_pt='origin',
     return None
 
 
-
-
-meshlabserver_path = 'C:\\Program Files\\VCG\\MeshLab'
-# os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
-
-#meshlabserver_path = '/Applications/meshlab.app/Contents/MacOS'
-os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
-
 def has_hidden_attribute(filepath):
     return bool(os.stat(filepath).st_file_attributes & stat.FILE_ATTRIBUTE_HIDDEN)
 

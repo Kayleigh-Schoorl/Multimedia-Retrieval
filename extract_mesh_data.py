@@ -11,7 +11,7 @@ def has_hidden_attribute(filepath):
 
 
 curr_directory = os.getcwd()
-db_path = os.path.join(curr_directory, "normalized")
+db_path = os.path.join(curr_directory, "meshes", "normalized")
 data = [["Name", "Class", "Faces", "Vertices", "Type of faces", "Bounding box"]]
 
 for filename in os.listdir(db_path):
@@ -47,7 +47,7 @@ for filename in os.listdir(db_path):
 
 
 # write to excel sheet
-workbook = xlsxwriter.Workbook('mesh_database2.xlsx')
+workbook = xlsxwriter.Workbook('mesh_database.xlsx')
 worksheet = workbook.add_worksheet("Data")
 
 row = 0

@@ -19,10 +19,11 @@ To be able to run all of the scripts in this project, the following Python libra
 - numpy
 - opencv-contrib-python (deintall opencv-python and possible existing installation of opencv-contrib-python before installing this!)
 - pillow
+- pylab
 - pynndescent
 - pyvista
 - trimesh
 - xlsxwriter
 
 Also, Meshlab will need to be installed on your computer. To do so, please download here: https://www.meshlab.net/#download
-The path in query_steps/normalization.py file will need to be changed to your Meshlab installation.i
+Please make sure make sure the path to your Meshlab installation is included in the environment path variables on your system!! You can test this by opening a terminal screen and typing 'meshlab'; this should open the Meshlab program.

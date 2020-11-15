@@ -4,11 +4,6 @@ import os, stat
 from pathlib import Path
 import meshlabxml as mlx
 
-meshlabserver_path = 'C:\\Program Files\\VCG\\MeshLab'
-# os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
-
-#meshlabserver_path = '/Applications/meshlab.app/Contents/MacOS'
-os.environ['PATH'] = meshlabserver_path + os.pathsep + os.environ['PATH']
 
 def has_hidden_attribute(filepath):
     return bool(os.stat(filepath).st_file_attributes & stat.FILE_ATTRIBUTE_HIDDEN)
