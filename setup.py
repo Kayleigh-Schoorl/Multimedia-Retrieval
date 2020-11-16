@@ -18,7 +18,8 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-'	'networkx',
+        'pyglet',
+	    'networkx',
         'meshlabxml',
         'matplotlib',
         'pillow',
@@ -28,15 +29,15 @@ setuptools.setup(
         'argparse',
         'appdirs',
         'pynndescent',
-	'vtk',
-	'scooby',
-	'imageio',
-	'meshio',
-	'scipy==1.4.1',
-	'scikit-learn==0.21.3',
+        'vtk',
+        'scooby',
+        'imageio',
+        'meshio',
+        'scipy==1.4.1',
+        'scikit-learn==0.21.3',
         'llvmlite',
-	'numba',
-	'numpy'
+        'numba',
+        'numpy'
     ],
     python_requires='>=3.6',
 )

@@ -8,24 +8,27 @@ This system finds and shows the user the most similar 3D shapes from a 3D shape 
 
 To run scripts, first navigate to the folder they are in and then run it!
 
-*Set up:*
+## Set up:
 Meshlab will need to be installed on your computer. To do so, please download here: https://www.meshlab.net/#download
 Please make sure make sure the path to your Meshlab installation is included in the environment path variables on your system!! You can test this by opening a terminal screen and typing 'meshlab'; this should open the Meshlab program.
 
-This project has been written on Python 3.7.
-The required python libraries can be installed by running the setup.py sript like this: python setup.py develop --user
-This should all required libraries automatically. It is recommended to run this on a clean python environment.
+This project has been written in Python 3.7.
+The required python libraries can be installed by running the setup.py sript like this:
+```
+python setup.py develop --user
+```
+This should install all required libraries automatically. It is recommended to run this on a clean Python 3.7 environment to avoid conflicts with previously installed packages.
 
-ALternatively, the libraries can be installed one by one (or if one is still missing or not working, check the following list):
-To be able to run all of the scripts in this project, the following Python libraries need to be installed first (please note this list might not be fully exhaustive):
+ALternatively, the libraries can be installed one by one (or if one is still missing or not working after running setup.py, check the following list if something is missing):
+To be able to run all of the scripts in this project, the following Python libraries need to be installed first:
 - appdirs
 - argparse
-- llvmlite (possibly needs deinstalling existing installation en reinstalling to run pynndescent)
+- llvmlite (possibly needs deinstalling existing installation and reinstalling in order to run pynndescent)
 - matplotlib
 - meshlabxml
 - numba
 - numpy
-- opencv-contrib-python (deintall opencv-python and possible existing installation of opencv-contrib-python before installing this!)
+- opencv-contrib-python (deintall previously existing installation of opencv-python and  opencv-contrib-python before installing this!)
 - pillow
 - pynndescent
 - pyvista
@@ -38,6 +41,17 @@ To be able to run all of the scripts in this project, the following Python libra
 - imageio
 - meshio
 - networkx
+- pyglet
 
+## Running the querying system
+First, run the following command:
+```
+python create_ann_model.py
+```
+This script creates a Approximate Nearest Neighbor model. This model is stored in a config file which is environment and system specific, so it needs to be remade when running the system on a new system or environment.
 
-
+Next, the querying system can be called like this:
+```
+python query_all_steps -M path/to/mesh
+```
+This will use ANN for searching shapes by default. An optional parameter -E or --exact can be used to use an exact distance function for searching shapes.
