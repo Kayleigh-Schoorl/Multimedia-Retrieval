@@ -57,7 +57,6 @@ def distance_computation(v1, v2):
 
     return total_distance
 
-os.chdir("..")
 curr_directory=os.getcwd()
 with open(os.path.join(curr_directory, 'config', 'normalized_features.json'), 'r') as f:
     data = json.load(f)
