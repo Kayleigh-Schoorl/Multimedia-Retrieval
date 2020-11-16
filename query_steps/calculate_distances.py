@@ -71,7 +71,7 @@ def distance_exact(query_data):
         neighbor_names.append(found_shape)
         print("Found shape number " + str(count) + " is: " + found_shape)
         count += 1
-    return neighbor_names
+    return neighbor_names, distances[:8]
     
 def distance_ann(query_data):
 
@@ -102,7 +102,10 @@ def distance_ann(query_data):
             query_features.append(image_features.get(feature))
 
     index = pickle.load( open( os.path.join(curr_directory, 'config', "ann_model.p"), "rb" ) )
-    neighbors = index.query(np.array([query_features]), k=8)[0][0]
+    results = index.query(np.array([query_features]), k=8)
+
+    neighbors = results[0][0]
+    distances = results[1][0]
 
     count = 1
     neighbor_names = []
@@ -112,10 +115,10 @@ def distance_ann(query_data):
         print("Found shape number " + str(count) + " is: " + found_shape_name)
         count += 1
 
-    return neighbor_names
+    return neighbor_names, distances
 
-def distance(query_data, ann=True):
-    if ann == True:
+def distance(query_data, exact=False):
+    if exact == False:
         return distance_ann(query_data)
     else:
         return distance_exact(query_data)

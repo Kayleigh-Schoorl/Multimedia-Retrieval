@@ -13,6 +13,7 @@ from query_steps import calculate_distances
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-M", "--mesh", help="input mesh")
+parser.add_argument("-E", "--exact", help="use exact distance method", action="store_true")
 
 args = parser.parse_args()
 
@@ -40,7 +41,7 @@ print("Performing feature extraction...")
 data = extract_features.extract(mesh)
 
 print("Finding 8 closest shapes in the database...")
-found_shapes = calculate_distances.distance(data, ann=True)
+found_shapes, distances = calculate_distances.distance(data, exact=args.exact)
 
 curr_directory = os.getcwd()
 db_path = os.path.join(curr_directory, "LabeledDB_new")
@@ -63,6 +64,7 @@ for i in range(len(found_shapes)):
     mesh = pv.read(os.path.join(db_path, mesh_class1, mesh_name1))
     p.subplot(subplots[i][0],subplots[i][1])
     p.add_text("Found shape #" + str(count), color="black")
+    p.add_text("Distance: " + str(distances[i]), color="black", position="bottom", font_size=10)
     p.add_mesh(mesh, color="pink")
     count += 1
 
