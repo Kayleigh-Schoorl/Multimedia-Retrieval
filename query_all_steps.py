@@ -64,7 +64,7 @@ for i in range(len(found_shapes)):
     mesh = pv.read(os.path.join(db_path, mesh_class1, mesh_name1))
     p.subplot(subplots[i][0],subplots[i][1])
     p.add_text("Found shape #" + str(count), color="black")
-    p.add_text("Distance: " + str(distances[i]), color="black", position="bottom", font_size=10)
+    p.add_text("Distance: " + str(round(distances[i],3)), color="black", position="bottom", font_size=10)
     p.add_mesh(mesh, color="pink")
     count += 1
 
