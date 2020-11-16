@@ -1,3 +1,6 @@
+# read_meshes.py
+# Small program for viewing meshes in a trimesh or pyvista window.
+
 import numpy as np
 import trimesh
 import argparse

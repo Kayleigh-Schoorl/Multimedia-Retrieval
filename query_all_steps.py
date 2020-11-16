@@ -4,6 +4,9 @@ import argparse
 import pyvista as pv
 
 from query_steps import normalization
+# query_all_steps.py
+# This code allows providing a mesh as input and will return the closest shape in our shape database.
+
 from query_steps import render_2D_images
 from query_steps import extract_features
 from query_steps import calculate_distances

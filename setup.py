@@ -1,0 +1,35 @@
+import setuptools
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+    name="MMR-Project-KSchoorl-AUngureanu", # Replace with your own username
+    version="0.0.1",
+    author="Kayleigh Schoorl & Andrei Ungureanu",
+    author_email="k.schoorl@students.uu.nl",
+    description="Multimedia retrieval project",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/Kayleigh-Schoorl/Multimedia-Retrieval",
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "Operating System :: OS Independent",
+    ],
+    install_requires=[
+        'numpy',
+        'meshlabxml',
+        'matplotlib',
+        'pillow',
+        'llvmlite',
+        'opencv-contrib-python',
+        'pyvista',
+        'trimesh',
+        'argparse',
+        'appdirs',
+        'numba',
+        'pynndescent'
+    ],
+    python_requires='>=3.6',
+)
