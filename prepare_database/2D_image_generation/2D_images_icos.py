@@ -3,11 +3,19 @@ import numpy as np
 import os
 import math
 import cv2
+import platform 
 
 os.chdir("..")
 os.chdir("..")
-
 curr_directory = os.getcwd()
+
+x = 1200
+y = 800
+
+# Check for OSX since for some reason it will double the image size
+if platform.system() == 'Darwin':
+    x = int(x/2)
+    y = int(y/2)
 
 ANGLE72 = math.radians(72)
 ANGLE36 = math.radians(36)
@@ -85,7 +93,7 @@ for filename in os.listdir(db_path):
         file_name = os.path.join(curr_directory, "images", "renders", mesh_name,
                                  mesh_name + '_' + "1" + '_render' + '.png')
         # save a render of the object as a png
-        png = scene.save_image(resolution=[600, 400], visible=True)
+        png = scene.save_image(resolution=[x, y], visible=True)
 
         with open(file_name, 'wb') as f:
             f.write(png)
@@ -102,7 +110,7 @@ for filename in os.listdir(db_path):
         file_name = os.path.join(curr_directory, "images", "renders", mesh_name,
                                  mesh_name + '_' + "2" + '_render' + '.png')
         # save a render of the object as a png
-        png = scene.save_image(resolution=[600, 400], visible=True)
+        png = scene.save_image(resolution=[x, y], visible=True)
 
         with open(file_name, 'wb') as f:
             f.write(png)
@@ -126,7 +134,7 @@ for filename in os.listdir(db_path):
             file_name = os.path.join(curr_directory, "images", "renders", mesh_name,
                                      mesh_name + '_' + str(i)+ '_render' + '.png')
             # save a render of the object as a png
-            png = scene.save_image(resolution=[600, 400], visible=True)
+            png = scene.save_image(resolution=[x, y], visible=True)
 
             with open(file_name, 'wb') as f:
                 f.write(png)
@@ -154,7 +162,7 @@ for filename in os.listdir(db_path):
                                  mesh_name + '_' + "7" + '_render' + '.png')
 
         # save a render of the object as a png
-        png = scene.save_image(resolution=[600, 400], visible=True)
+        png = scene.save_image(resolution=[x, y], visible=True)
 
         with open(file_name, 'wb') as f:
             f.write(png)
@@ -173,7 +181,7 @@ for filename in os.listdir(db_path):
         file_name = os.path.join(curr_directory, "images", "renders", mesh_name,
                                  mesh_name + '_' + "8" + '_render' + '.png')
         # save a render of the object as a png
-        png = scene.save_image(resolution=[600, 400], visible=True)
+        png = scene.save_image(resolution=[x, y], visible=True)
 
         with open(file_name, 'wb') as f:
             f.write(png)
@@ -198,7 +206,7 @@ for filename in os.listdir(db_path):
             file_name = os.path.join(curr_directory, "images", "renders", mesh_name,
                                      mesh_name + '_' +str(i)+ '_render' + '.png')
             # save a render of the object as a png
-            png = scene.save_image(resolution=[600, 400], visible=True)
+            png = scene.save_image(resolution=[x, y], visible=True)
 
             with open(file_name, 'wb') as f:
                 f.write(png)

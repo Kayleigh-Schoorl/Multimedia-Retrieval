@@ -4,11 +4,19 @@ import cv2
 import os
 import time
 import multiprocessing
+import platform
 
 os.chdir("..")
 os.chdir("..")
-
 curr_directory = os.getcwd()
+
+x = 1200
+y = 800
+
+# Check for OSX since for some reason it will double the image size
+if platform.system() == 'Darwin':
+    x = int(x/2)
+    y = int(y/2)
 
 db_path = os.path.join(curr_directory, "meshes", "flipped")
 
@@ -57,7 +65,7 @@ def get_image_renders(class_name):
             try:
                 file_name = os.path.join(curr_directory, "images", "renders", mesh_name, mesh_name+'_'+direction+'_render' + '.png')
                 # save a render of the object as a png
-                png = scene.save_image(resolution=[600, 400], visible=True)
+                png = scene.save_image(resolution=[x, y], visible=True)
 
                 with open(file_name, 'wb') as f:
                     f.write(png)
